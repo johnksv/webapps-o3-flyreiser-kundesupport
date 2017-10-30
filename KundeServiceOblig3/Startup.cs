@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using DAL;
 
 namespace KundeServiceOblig3
 {
@@ -23,6 +25,10 @@ namespace KundeServiceOblig3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+
+            
+            services.AddDbContext<DB>(options => options.UseSqlServer(Configuration.GetConnectionString("Database"), asm => asm.MigrationsAssembly("KundeServiceOblig3")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
