@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace DAL.Model
+namespace DAL.DBModel
 {
     public class SporsmalC
     {
@@ -11,7 +11,7 @@ namespace DAL.Model
         public int ID { get; set; }
         public string Sporsmal { get; set; }
         public DateTime Stilt { get; set; }
-        public bool Publisert { get; set; }
+        public bool Publisert { get; set; } = false;
         public SvarC Svar { get; set; }
 
     }

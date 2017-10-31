@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,8 +26,7 @@ namespace KundeServiceOblig3
         {
             services.AddMvc();
 
-
-            
+            //Sett opp Dependecy injection for databasen vår
             services.AddDbContext<DB>(options => options.UseSqlServer(Configuration.GetConnectionString("Database"), asm => asm.MigrationsAssembly("KundeServiceOblig3")));
         }
 
