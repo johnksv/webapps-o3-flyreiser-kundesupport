@@ -10,7 +10,10 @@ namespace DAL
         {
         }
 
-        public virtual DbSet<Sporsmal> Sporsmal { get; set; }
+        public virtual DbSet<SporsmalC> Sporsmal { get; set; }
+        public virtual DbSet<SvarC> Svar { get; set; }
+        public virtual DbSet<Kundebehandler> Kundebehandlere { get; set; }
+        public virtual DbSet<SkjemaSporsmal> SkjemaSporsmal { get; set; }
 
     }
 }

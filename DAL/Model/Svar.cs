@@ -5,14 +5,13 @@ using System.Text;
 
 namespace DAL.Model
 {
-    public class SporsmalC
+    public class SvarC
     {
+
         [Key]
         public int ID { get; set; }
-        public string Sporsmal { get; set; }
-        public DateTime Stilt { get; set; }
-        public bool Publisert { get; set; }
-        public SvarC Svar { get; set; }
-
+        public string Svar { get; set; }
+        public Kundebehandler BesvartAv { get; set; }
+        public DateTime Besvart { get; set; }
     }
 }
