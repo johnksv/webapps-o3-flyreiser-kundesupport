@@ -1,7 +1,8 @@
 {
-  "name": "KundeServiceOblig3",
+  "name": "kundeserviceoblig3",
+  "description": "Obligatorisk oppgave 3 i webprosjekt høst 2017",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "devDependencies": {
     "@types/history": "4.6.0",
     "@types/react": "15.0.35",
