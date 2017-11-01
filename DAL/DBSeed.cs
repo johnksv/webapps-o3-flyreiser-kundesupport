@@ -10,77 +10,94 @@ namespace DAL
 
         public static void Seed(DB dbContext)
         {
-            if (!dbContext.Sporsmal.Any())
+            dbContext.Database.EnsureCreated();
+
+            if (dbContext.Sporsmal.Any())
             {
-                dbContext.AddRange(kundebehandlere);
+                return;
+            }
+            var kundebehandler = new Kundebehandler
+            {
+                Brukernavn = "Ola",
+                Passord = new byte[] { 157, 139, 122, 179, 32, 60, 242, 212, 90, 206, 9, 36, 228, 133, 132, 142, 26, 193, 225, 49, 252, 98, 154, 102, 87, 73, 148, 252, 232, 222, 104, 39 }, //Test1
+                Salt = "SALT"
+            };
 
-                dbContext.AddRange(sporsmal);
+            var sporsmalA = new SporsmalC
+            {
+                Sporsmal = "Hvordan kan jeg avbestille min reise?",
+                Stilt = DateTime.Now.AddDays(-17)
+            };
 
-                dbContext.AddRange(skjemaSporsmal);
+            var sporsmalB = new SporsmalC
+            {
+                Sporsmal = "Hvor mye koster ekstra bagasje?",
+                Stilt = DateTime.Now.AddDays(-12)
+            };
+            var sporsmalC = new SporsmalC
+            {
+                Sporsmal = "Selger dere gavekort?",
+                Stilt = DateTime.Now.AddDays(-4)
+            };
+            var sporsmalD = new SporsmalC
+            {
+                Sporsmal = "Dere flyr ikke dit jeg vil. Når vil det komme reiser til Asia?",
+                Stilt = DateTime.Now
+            };
+            var svarA = new SvarC
+            {
+                Svar = "Du kan avbestille reisen din frem til det har gått 48 timer samt gitt at din flygning ikke har hatt avgang.",
+                Besvart = DateTime.Now.AddDays(-7),
+                BesvartAv = kundebehandler
+            };
+            var svarB = new SvarC
+            {
+                Svar = "Bagasje er gratis hos oss",
+                Besvart = DateTime.Now.AddDays(-10),
+                BesvartAv = kundebehandler
+            };
+
+            var svarC = new SvarC
+            {
+                Svar = "Bagasje er gratis hos oss",
+                Besvart = DateTime.Now.AddDays(-10),
+                BesvartAv = kundebehandler
+            };
+            /* svarA.Sporsmal = sporsmalA;
+            svarB.Sporsmal = sporsmalB;
+            svarC.Sporsmal = sporsmalC; */
+            
+
+            var skjemaSporsmal = new SkjemaSporsmal
+            {
+                Epost = "test@email.com",
+                Fornavn = "Ola",
+                Etternavn = "Nordmann",
+                Telefon = "12345678",
+                Sporsmal = sporsmalD
+            };
+
+            dbContext.Kundebehandlere.Add(kundebehandler);
+            dbContext.Sporsmal.Add(sporsmalA);
+            dbContext.Sporsmal.Add(sporsmalB);
+            dbContext.Sporsmal.Add(sporsmalC);
+            dbContext.Sporsmal.Add(sporsmalD);
+            dbContext.Svar.Add(svarA);
+            dbContext.Svar.Add(svarB);
+            dbContext.Svar.Add(svarC);
+
+            dbContext.SkjemaSporsmal.Add(skjemaSporsmal);
+            try
+            {
+
                 dbContext.SaveChanges();
             }
+            catch (Exception e)
+            {
+
+            }
+
         }
 
-        private static List<Kundebehandler> kundebehandlere = new List<Kundebehandler>
-        {
-            new Kundebehandler
-            {
-                Brukernavn ="Ola",
-                Passord = new byte[]{ 157, 139, 122, 179, 32, 60, 242, 212, 90, 206, 9, 36, 228, 133, 132, 142, 26, 193, 225, 49, 252, 98, 154, 102, 87, 73, 148, 252, 232, 222, 104, 39 }, //Test1
-                Salt = "SALT"
-            }
-
-        };
-
-        private static List<SporsmalC> sporsmal = new List<SporsmalC>
-        {
-            new SporsmalC
-            {
-                Sporsmal ="Hvordan kan jeg avbestille min reise?",
-                Stilt = DateTime.Now.AddDays(-17),
-                Svar = new SvarC
-                {
-                    Svar ="Du kan avbestille reisen din frem til det har gått 48 timer samt gitt at din flygning ikke har hatt avgang."
-                }
-            },
-            new SporsmalC
-            {
-                Sporsmal ="Hvor mye koster ekstra bagasje?",
-                Stilt = DateTime.Now.AddDays(-12),
-                Svar = new SvarC
-                {
-                    Svar ="Bagasje er gratis hos oss",
-                    Besvart = DateTime.Now.AddDays(-10),
-                    BesvartAv = kundebehandlere.First(),
-                }
-            },
-            new SporsmalC
-            {
-                Sporsmal ="Selger dere gavekort?",
-                Stilt = DateTime.Now.AddDays(-4),
-                Svar = new SvarC
-                {
-                    Svar ="Bagasje er gratis hos oss",
-                    Besvart = DateTime.Now.AddDays(-10),
-                    BesvartAv = kundebehandlere.First(),
-                }
-            }
-        };
-
-        private static List<SkjemaSporsmal> skjemaSporsmal = new List<SkjemaSporsmal>
-        {
-            new SkjemaSporsmal
-            {
-                Epost ="test@email.com",
-                Fornavn = "Ola",
-                Etternavn ="Nordmann",
-                Telefon = "12345678",
-                Sporsmal = new SporsmalC
-                {
-                    Sporsmal ="Dere flyr ikke dit jeg vil. Når vil det komme reiser til Asia?",
-                    Stilt = DateTime.Now,
-                }
-            }
-        };
     }
 }

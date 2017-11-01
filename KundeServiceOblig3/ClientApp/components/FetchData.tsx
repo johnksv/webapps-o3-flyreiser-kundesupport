@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 
 interface FetchDataExampleState {
-    forecasts: WeatherForecast[];
+    forecasts: SporsmalOgSvar[];
     loading: boolean;
 }
 
@@ -12,8 +12,8 @@ export class FetchData extends React.Component<RouteComponentProps<{}>, FetchDat
         super();
         this.state = { forecasts: [], loading: true };
 
-        fetch('api/SampleData/WeatherForecasts')
-            .then(response => response.json() as Promise<WeatherForecast[]>)
+        fetch('api/SporsmalOgSvar/')
+            .then(response => response.json() as Promise<SporsmalOgSvar[]>)
             .then(data => {
                 this.setState({ forecasts: data, loading: false });
             });
@@ -31,7 +31,7 @@ export class FetchData extends React.Component<RouteComponentProps<{}>, FetchDat
         </div>;
     }
 
-    private static renderForecastsTable(forecasts: WeatherForecast[]) {
+    private static renderForecastsTable(forecasts: SporsmalOgSvar[]) {
         return <table className='table'>
             <thead>
                 <tr>
@@ -42,12 +42,10 @@ export class FetchData extends React.Component<RouteComponentProps<{}>, FetchDat
                 </tr>
             </thead>
             <tbody>
-            {forecasts.map(forecast =>
-                <tr key={ forecast.dateFormatted }>
-                    <td>{ forecast.dateFormatted }</td>
-                    <td>{ forecast.temperatureC }</td>
-                    <td>{ forecast.temperatureF }</td>
-                    <td>{ forecast.summary }</td>
+                {forecasts.map(forecast =>
+                    <tr key={forecast.Sporsmal.Sporsmal}>
+                        <td>{forecast.Sporsmal.Stilt}</td>
+                        <td>{forecast.Svar.Svar}</td>
                 </tr>
             )}
             </tbody>
@@ -55,9 +53,19 @@ export class FetchData extends React.Component<RouteComponentProps<{}>, FetchDat
     }
 }
 
-interface WeatherForecast {
-    dateFormatted: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+interface SporsmalOgSvar {
+    Sporsmal: SporsmalC;
+    Svar: SvarC;
+}
+
+interface SporsmalC {
+    ID: number;
+    Sporsmal: string;
+    Stilt: Date;
+    Publisert: boolean;
+}
+
+interface SvarC {
+    Svar: string;
+    Besvart: Date;
 }

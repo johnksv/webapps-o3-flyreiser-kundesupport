@@ -20,19 +20,21 @@ namespace KundeServiceOblig3.Migrations
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Model.Kundebehandler", b =>
+            modelBuilder.Entity("DAL.DBModel.Kundebehandler", b =>
                 {
                     b.Property<string>("Brukernavn")
                         .ValueGeneratedOnAdd();
 
                     b.Property<byte[]>("Passord");
 
+                    b.Property<string>("Salt");
+
                     b.HasKey("Brukernavn");
 
                     b.ToTable("Kundebehandlere");
                 });
 
-            modelBuilder.Entity("DAL.Model.SkjemaSporsmal", b =>
+            modelBuilder.Entity("DAL.DBModel.SkjemaSporsmal", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -54,7 +56,7 @@ namespace KundeServiceOblig3.Migrations
                     b.ToTable("SkjemaSporsmal");
                 });
 
-            modelBuilder.Entity("DAL.Model.SporsmalC", b =>
+            modelBuilder.Entity("DAL.DBModel.SporsmalC", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -74,7 +76,7 @@ namespace KundeServiceOblig3.Migrations
                     b.ToTable("Sporsmal");
                 });
 
-            modelBuilder.Entity("DAL.Model.SvarC", b =>
+            modelBuilder.Entity("DAL.DBModel.SvarC", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -92,23 +94,23 @@ namespace KundeServiceOblig3.Migrations
                     b.ToTable("Svar");
                 });
 
-            modelBuilder.Entity("DAL.Model.SkjemaSporsmal", b =>
+            modelBuilder.Entity("DAL.DBModel.SkjemaSporsmal", b =>
                 {
-                    b.HasOne("DAL.Model.SporsmalC", "Sporsmal")
+                    b.HasOne("DAL.DBModel.SporsmalC", "Sporsmal")
                         .WithMany()
                         .HasForeignKey("SporsmalID");
                 });
 
-            modelBuilder.Entity("DAL.Model.SporsmalC", b =>
+            modelBuilder.Entity("DAL.DBModel.SporsmalC", b =>
                 {
-                    b.HasOne("DAL.Model.SvarC", "Svar")
+                    b.HasOne("DAL.DBModel.SvarC", "Svar")
                         .WithMany()
                         .HasForeignKey("SvarID");
                 });
 
-            modelBuilder.Entity("DAL.Model.SvarC", b =>
+            modelBuilder.Entity("DAL.DBModel.SvarC", b =>
                 {
-                    b.HasOne("DAL.Model.Kundebehandler", "BesvartAv")
+                    b.HasOne("DAL.DBModel.Kundebehandler", "BesvartAv")
                         .WithMany()
                         .HasForeignKey("BesvartAvBrukernavn");
                 });
