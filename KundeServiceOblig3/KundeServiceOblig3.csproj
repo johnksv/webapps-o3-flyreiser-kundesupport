@@ -9,7 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\Innsending.tsx" />
+    <None Remove="ClientApp\components\Sporsmal.tsx" />
     <None Remove="ClientApp\components\SporsmalOgSvar.tsx" />
+    <None Remove="ClientApp\components\Svar.tsx" />
+    <None Remove="ClientApp\interfaces\ModelInterface.tsx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +34,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\Innsending.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Sporsmal.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SporsmalOgSvar.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\SporsmalOgSvarContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Svar.tsx" />
+    <TypeScriptCompile Include="ClientApp\interfaces\ModelInterface.tsx" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

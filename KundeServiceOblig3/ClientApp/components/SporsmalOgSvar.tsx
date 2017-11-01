@@ -1,17 +1,17 @@
 ﻿import * as React from "react";
-import { RouteComponentProps } from 'react-router';
+import { SporsmalOgSvarIProps } from "../interfaces/PropsInterface";
+import Sporsmal from "./Sporsmal";
+import Svar from "./Svar";
 
-export default class SporsmalOgSvar extends React.Component<RouteComponentProps<{}>, {}> {
 
-    constructor() {
-        super();
-    }
+export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps, {}> {
 
     public render() {
         return <div>
-            <p>Hallo Verden!</p>    
-        </div>;
-    }
+            <Sporsmal Sporsmal={this.props.SporsmalOgSvar.Sporsmal} />
+            <Svar Svar={this.props.SporsmalOgSvar.Svar} />
+        </div>
 
+    }
 
 }

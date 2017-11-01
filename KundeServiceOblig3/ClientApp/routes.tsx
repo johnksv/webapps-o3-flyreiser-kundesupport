@@ -4,11 +4,11 @@ import { Layout } from "./components/Layout";
 import { Home } from "./components/Home";
 import { FetchData } from "./components/FetchData";
 import { Counter } from "./components/Counter";
-import SporsmalOgSvar from "./components/SporsmalOgSvar";
+import SporsmalOgSvarContainer from "./components/SporsmalOgSvarContainer";
 
 export const routes = <Layout>
     <Route exact path="/" component={ Home } />
     <Route path="/counter" component={ Counter } />
     <Route path="/fetchdata" component={FetchData} />
-    <Route path="/sporsmalogsvar" component={SporsmalOgSvar} />
+    <Route path="/sporsmalogsvar" component={SporsmalOgSvarContainer} />
 </Layout>;
