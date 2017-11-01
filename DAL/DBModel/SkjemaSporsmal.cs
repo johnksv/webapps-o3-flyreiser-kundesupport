@@ -15,6 +15,6 @@ namespace DAL.DBModel
         public string Etternavn { get; set; }
         public string Epost { get; set; }
         public string Telefon { get; set; }
-        public virtual SporsmalC Sporsmal { get; set; }
+        public virtual SporsmalOgSvar SporsmalOgSvar { get; set; }
     }
 }

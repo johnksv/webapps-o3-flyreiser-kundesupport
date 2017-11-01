@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.DBModel;
-using KundeServiceOblig3.Models;
 
 namespace KundeServiceOblig3.Controllers
 {
@@ -27,14 +24,11 @@ namespace KundeServiceOblig3.Controllers
         public List<SporsmalOgSvar> GetSporsmalOgSvar()
         {
             var resultat = new List<SporsmalOgSvar>();
-
-            foreach (var sporsmal in db.Sporsmal)
+            var sporsmalSvarListe = db.SporsmalOgSvar
+                .Include(s => s.Sporsmal)
+                .Include(s => s.Svar).ToList();
+            foreach (var sporsmalSvar in sporsmalSvarListe)
             {
-                var sporsmalSvar = new SporsmalOgSvar
-                {
-                    Sporsmal = sporsmal,
-                    Svar = sporsmal.Svar
-                };
                 resultat.Add(sporsmalSvar);
             }
 
@@ -56,8 +50,7 @@ namespace KundeServiceOblig3.Controllers
             {
                 var sporsmalSvar = new SporsmalOgSvar
                 {
-                    Sporsmal = sporsmal,
-                    Svar = sporsmal.Svar
+                    Sporsmal = sporsmal
                 };
 
                 return Ok(sporsmalSvar);

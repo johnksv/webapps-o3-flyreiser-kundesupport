@@ -23,6 +23,20 @@ namespace KundeServiceOblig3.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sporsmal",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Sporsmal = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Stilt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sporsmal", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Svar",
                 columns: table => new
                 {
@@ -44,21 +58,26 @@ namespace KundeServiceOblig3.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sporsmal",
+                name: "SporsmalOgSvar",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Publisert = table.Column<bool>(type: "bit", nullable: false),
-                    Sporsmal = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Stilt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SporsmalID = table.Column<int>(type: "int", nullable: false),
                     SvarID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sporsmal", x => x.ID);
+                    table.PrimaryKey("PK_SporsmalOgSvar", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Sporsmal_Svar_SvarID",
+                        name: "FK_SporsmalOgSvar_Sporsmal_SporsmalID",
+                        column: x => x.SporsmalID,
+                        principalTable: "Sporsmal",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SporsmalOgSvar_Svar_SvarID",
                         column: x => x.SvarID,
                         principalTable: "Svar",
                         principalColumn: "ID",
@@ -74,28 +93,33 @@ namespace KundeServiceOblig3.Migrations
                     Epost = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Etternavn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Fornavn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SporsmalID = table.Column<int>(type: "int", nullable: true),
+                    SporsmalOgSvarID = table.Column<int>(type: "int", nullable: true),
                     Telefon = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SkjemaSporsmal", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_SkjemaSporsmal_Sporsmal_SporsmalID",
-                        column: x => x.SporsmalID,
-                        principalTable: "Sporsmal",
+                        name: "FK_SkjemaSporsmal_SporsmalOgSvar_SporsmalOgSvarID",
+                        column: x => x.SporsmalOgSvarID,
+                        principalTable: "SporsmalOgSvar",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_SkjemaSporsmal_SporsmalID",
+                name: "IX_SkjemaSporsmal_SporsmalOgSvarID",
                 table: "SkjemaSporsmal",
+                column: "SporsmalOgSvarID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SporsmalOgSvar_SporsmalID",
+                table: "SporsmalOgSvar",
                 column: "SporsmalID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sporsmal_SvarID",
-                table: "Sporsmal",
+                name: "IX_SporsmalOgSvar_SvarID",
+                table: "SporsmalOgSvar",
                 column: "SvarID");
 
             migrationBuilder.CreateIndex(
@@ -108,6 +132,9 @@ namespace KundeServiceOblig3.Migrations
         {
             migrationBuilder.DropTable(
                 name: "SkjemaSporsmal");
+
+            migrationBuilder.DropTable(
+                name: "SporsmalOgSvar");
 
             migrationBuilder.DropTable(
                 name: "Sporsmal");

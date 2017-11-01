@@ -13,12 +13,13 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
-            modelBuilder.Entity<SporsmalC>()
-            .HasOne(sporsmal => sporsmal.Svar);
+            //modelBuilder.Entity<SporsmalC>()
+            //.HasOne(sporsmal => sporsmal.Svar);
         }
 
         public virtual DbSet<SporsmalC> Sporsmal { get; set; }
         public virtual DbSet<SvarC> Svar { get; set; }
+        public virtual DbSet<SporsmalOgSvar> SporsmalOgSvar { get; set; }
         public virtual DbSet<Kundebehandler> Kundebehandlere { get; set; }
         public virtual DbSet<SkjemaSporsmal> SkjemaSporsmal { get; set; }
 

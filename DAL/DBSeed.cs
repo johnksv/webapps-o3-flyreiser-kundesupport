@@ -22,6 +22,25 @@ namespace DAL
                 Passord = new byte[] { 157, 139, 122, 179, 32, 60, 242, 212, 90, 206, 9, 36, 228, 133, 132, 142, 26, 193, 225, 49, 252, 98, 154, 102, 87, 73, 148, 252, 232, 222, 104, 39 }, //Test1
                 Salt = "SALT"
             };
+            var svarA = new SvarC
+            {
+                Svar = "Du kan avbestille reisen din frem til det har gått 48 timer samt gitt at din flygning ikke har hatt avgang.",
+                Besvart = DateTime.Now.AddDays(-7),
+                BesvartAv = kundebehandler
+            };
+            var svarB = new SvarC
+            {
+                Svar = "Bagasje er gratis hos oss",
+                Besvart = DateTime.Now.AddDays(-10),
+                BesvartAv = kundebehandler
+            };
+
+            var svarC = new SvarC
+            {
+                Svar = "Bagasje er gratis hos oss",
+                Besvart = DateTime.Now.AddDays(-10),
+                BesvartAv = kundebehandler
+            };
 
             var sporsmalA = new SporsmalC
             {
@@ -44,29 +63,27 @@ namespace DAL
                 Sporsmal = "Dere flyr ikke dit jeg vil. Når vil det komme reiser til Asia?",
                 Stilt = DateTime.Now
             };
-            var svarA = new SvarC
+
+            var sporsmalSvarA = new SporsmalOgSvar
             {
-                Svar = "Du kan avbestille reisen din frem til det har gått 48 timer samt gitt at din flygning ikke har hatt avgang.",
-                Besvart = DateTime.Now.AddDays(-7),
-                BesvartAv = kundebehandler
+                Sporsmal = sporsmalA,
+                Svar = svarA
             };
-            var svarB = new SvarC
+            var sporsmalSvarB = new SporsmalOgSvar
             {
-                Svar = "Bagasje er gratis hos oss",
-                Besvart = DateTime.Now.AddDays(-10),
-                BesvartAv = kundebehandler
+                Sporsmal = sporsmalB,
+                Svar = svarB
+            };
+            var sporsmalSvarC = new SporsmalOgSvar
+            {
+                Sporsmal = sporsmalC,
+                Svar = svarC
+            };
+            var sporsmalSvarD = new SporsmalOgSvar
+            {
+                Sporsmal = sporsmalD
             };
 
-            var svarC = new SvarC
-            {
-                Svar = "Bagasje er gratis hos oss",
-                Besvart = DateTime.Now.AddDays(-10),
-                BesvartAv = kundebehandler
-            };
-            /* svarA.Sporsmal = sporsmalA;
-            svarB.Sporsmal = sporsmalB;
-            svarC.Sporsmal = sporsmalC; */
-            
 
             var skjemaSporsmal = new SkjemaSporsmal
             {
@@ -74,17 +91,21 @@ namespace DAL
                 Fornavn = "Ola",
                 Etternavn = "Nordmann",
                 Telefon = "12345678",
-                Sporsmal = sporsmalD
+                SporsmalOgSvar = sporsmalSvarD
             };
 
             dbContext.Kundebehandlere.Add(kundebehandler);
+            /* dbContext.Svar.Add(svarA);
+            dbContext.Svar.Add(svarB);
+            dbContext.Svar.Add(svarC);
             dbContext.Sporsmal.Add(sporsmalA);
             dbContext.Sporsmal.Add(sporsmalB);
             dbContext.Sporsmal.Add(sporsmalC);
-            dbContext.Sporsmal.Add(sporsmalD);
-            dbContext.Svar.Add(svarA);
-            dbContext.Svar.Add(svarB);
-            dbContext.Svar.Add(svarC);
+            dbContext.Sporsmal.Add(sporsmalD); */
+            dbContext.SporsmalOgSvar.Add(sporsmalSvarA);
+            dbContext.SporsmalOgSvar.Add(sporsmalSvarC);
+            dbContext.SporsmalOgSvar.Add(sporsmalSvarB);
+            dbContext.SporsmalOgSvar.Add(sporsmalSvarD);
 
             dbContext.SkjemaSporsmal.Add(skjemaSporsmal);
             try

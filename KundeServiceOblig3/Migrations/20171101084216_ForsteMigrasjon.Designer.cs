@@ -11,7 +11,7 @@ using System;
 namespace KundeServiceOblig3.Migrations
 {
     [DbContext(typeof(DB))]
-    [Migration("20171101080041_ForsteMigrasjon")]
+    [Migration("20171101084216_ForsteMigrasjon")]
     partial class ForsteMigrasjon
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,13 +46,13 @@ namespace KundeServiceOblig3.Migrations
 
                     b.Property<string>("Fornavn");
 
-                    b.Property<int?>("SporsmalID");
+                    b.Property<int?>("SporsmalOgSvarID");
 
                     b.Property<string>("Telefon");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("SporsmalID");
+                    b.HasIndex("SporsmalOgSvarID");
 
                     b.ToTable("SkjemaSporsmal");
                 });
@@ -62,19 +62,33 @@ namespace KundeServiceOblig3.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("Publisert");
-
                     b.Property<string>("Sporsmal");
 
                     b.Property<DateTime>("Stilt");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Sporsmal");
+                });
+
+            modelBuilder.Entity("DAL.DBModel.SporsmalOgSvar", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Publisert");
+
+                    b.Property<int>("SporsmalID");
 
                     b.Property<int?>("SvarID");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("SporsmalID");
+
                     b.HasIndex("SvarID");
 
-                    b.ToTable("Sporsmal");
+                    b.ToTable("SporsmalOgSvar");
                 });
 
             modelBuilder.Entity("DAL.DBModel.SvarC", b =>
@@ -97,13 +111,18 @@ namespace KundeServiceOblig3.Migrations
 
             modelBuilder.Entity("DAL.DBModel.SkjemaSporsmal", b =>
                 {
-                    b.HasOne("DAL.DBModel.SporsmalC", "Sporsmal")
+                    b.HasOne("DAL.DBModel.SporsmalOgSvar", "SporsmalOgSvar")
                         .WithMany()
-                        .HasForeignKey("SporsmalID");
+                        .HasForeignKey("SporsmalOgSvarID");
                 });
 
-            modelBuilder.Entity("DAL.DBModel.SporsmalC", b =>
+            modelBuilder.Entity("DAL.DBModel.SporsmalOgSvar", b =>
                 {
+                    b.HasOne("DAL.DBModel.SporsmalC", "Sporsmal")
+                        .WithMany()
+                        .HasForeignKey("SporsmalID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("DAL.DBModel.SvarC", "Svar")
                         .WithMany()
                         .HasForeignKey("SvarID");
@@ -112,7 +131,7 @@ namespace KundeServiceOblig3.Migrations
             modelBuilder.Entity("DAL.DBModel.SvarC", b =>
                 {
                     b.HasOne("DAL.DBModel.Kundebehandler", "BesvartAv")
-                        .WithMany()
+                        .WithMany("Svar")
                         .HasForeignKey("BesvartAvBrukernavn");
                 });
 #pragma warning restore 612, 618

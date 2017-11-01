@@ -13,8 +13,5 @@ namespace DAL.DBModel
         public int ID { get; set; }
         public string Sporsmal { get; set; }
         public DateTime Stilt { get; set; }
-        public bool Publisert { get; set; } = false;
-        public virtual SvarC Svar { get; set; }
-
     }
 }

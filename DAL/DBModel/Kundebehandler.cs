@@ -12,6 +12,7 @@ namespace DAL.DBModel
         public byte[] Passord { get; set; }
         public string Salt { get; set; }
 
+        public virtual List<SvarC> Svar { get; set; }
 
         public static byte[] HashPassord(string password, string salt)
         {
