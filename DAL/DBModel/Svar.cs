@@ -13,7 +13,9 @@ namespace DAL.DBModel
         [Key]
         public int ID { get; set; }
         public string Svar { get; set; }
-        public Kundebehandler BesvartAv { get; set; }
+        public Kundebehandler BesvartAvKundebehandler { get; set; }
         public DateTime Besvart { get; set; }
-    }
+        [NotMapped]
+        public string BesvartAv { get; set;}
+}
 }

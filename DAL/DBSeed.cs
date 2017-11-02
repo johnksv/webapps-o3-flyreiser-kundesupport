@@ -26,20 +26,20 @@ namespace DAL
             {
                 Svar = "Du kan avbestille reisen din frem til det har gått 48 timer samt gitt at din flygning ikke har hatt avgang.",
                 Besvart = DateTime.Now.AddDays(-7),
-                BesvartAv = kundebehandler
+                BesvartAvKundebehandler = kundebehandler
             };
             var svarB = new SvarC
             {
                 Svar = "Bagasje er gratis hos oss",
                 Besvart = DateTime.Now.AddDays(-10),
-                BesvartAv = kundebehandler
+                BesvartAvKundebehandler = kundebehandler
             };
 
             var svarC = new SvarC
             {
                 Svar = "Bagasje er gratis hos oss",
                 Besvart = DateTime.Now.AddDays(-10),
-                BesvartAv = kundebehandler
+                BesvartAvKundebehandler = kundebehandler
             };
 
             var sporsmalA = new SporsmalC
@@ -108,16 +108,8 @@ namespace DAL
             dbContext.SporsmalOgSvar.Add(sporsmalSvarD);
 
             dbContext.SkjemaSporsmal.Add(skjemaSporsmal);
-            try
-            {
 
-                dbContext.SaveChanges();
-            }
-            catch (Exception e)
-            {
-
-            }
-
+            dbContext.SaveChanges();
         }
 
     }

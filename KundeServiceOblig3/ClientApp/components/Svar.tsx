@@ -8,8 +8,8 @@ export default class Svar extends React.Component<SvarIProps, {}> {
             const date = new Date(this.props.svar.besvart);
 
             return <div className="svar">
-                <p>Besvar av , {date.toLocaleDateString()}</p>
                 <p>{this.props.svar.svar}</p>
+                <p className="text-info">Besvart av {this.props.svar.besvartAv}, den {date.toLocaleDateString()}.</p>
             </div>;
         }
         return <div className="svar">

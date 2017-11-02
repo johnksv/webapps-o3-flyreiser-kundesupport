@@ -16,7 +16,7 @@ export interface SvarI {
     id: number;
     svar: string;
     besvart: string;
-    //besvartAv: string;
+    besvartAv: string;
 }
 
 export interface SkjemaSporsmalI {

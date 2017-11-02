@@ -26,9 +26,15 @@ namespace KundeServiceOblig3.Controllers
             var resultat = new List<SporsmalOgSvar>();
             var sporsmalSvarListe = db.SporsmalOgSvar
                 .Include(s => s.Sporsmal)
-                .Include(s => s.Svar).ToList();
+                .Include(s => s.Svar)
+                .Include(s => s.Svar.BesvartAvKundebehandler).ToList();
             foreach (var sporsmalSvar in sporsmalSvarListe)
             {
+                if (sporsmalSvar.Svar != null)
+                {
+                    sporsmalSvar.Svar.BesvartAv = sporsmalSvar.Svar.BesvartAvKundebehandler.Brukernavn;
+                    sporsmalSvar.Svar.BesvartAvKundebehandler = null;
+                }
                 resultat.Add(sporsmalSvar);
             }
 

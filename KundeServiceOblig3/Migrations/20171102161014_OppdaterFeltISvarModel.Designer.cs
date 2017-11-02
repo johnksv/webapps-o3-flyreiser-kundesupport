@@ -11,9 +11,10 @@ using System;
 namespace KundeServiceOblig3.Migrations
 {
     [DbContext(typeof(DB))]
-    partial class DBModelSnapshot : ModelSnapshot
+    [Migration("20171102161014_OppdaterFeltISvarModel")]
+    partial class OppdaterFeltISvarModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
