@@ -1,7 +1,9 @@
 ﻿
 export interface SporsmalOgSvarI {
+    id: number;
     Sporsmal: SporsmalI;
     Svar?: SvarI;
+    publisert: boolean;
 }
 
 export interface SporsmalI {
