@@ -1,11 +1,11 @@
 ﻿import * as React from "react";
 import 'isomorphic-fetch';
 import { RouteComponentProps } from 'react-router';
-import { SporsmalOgSvarI, SporsmalI, SvarI } from "../interfaces/ModelInterface";
+import * as Model from "../interfaces/ModelInterface";
 import SporsmalOgSvar from "./SporsmalOgSvar";
 
 interface StateInterface {
-    sprosmal: SporsmalOgSvarI[];
+    sporOgSvar: Model.SporsmalOgSvarI[];
     laster: boolean;
 }
 
@@ -14,7 +14,7 @@ export default class SporsmalOgSvarContainer extends React.Component<RouteCompon
     constructor(props : any) {
         super(props);
         this.state= {
-            sprosmal: [],
+            sporOgSvar: [],
             laster: true
         };
     }
@@ -28,40 +28,31 @@ export default class SporsmalOgSvarContainer extends React.Component<RouteCompon
             return <p>Laster</p>
         }
 
-        if (this.state.sprosmal.length == 0) {
+        if (this.state.sporOgSvar.length == 0) {
             return <p>Lengde er null</p>
         }
 
-        return this.samlingAvAlleSporsmal();
-    }
-
-    private samlingAvAlleSporsmal(): any {
-        return <div>
-            <p>Sporsmal</p>
-            {this.state.sprosmal.map((sporOgSvar, i) => {
-                console.log(sporOgSvar.Sporsmal.Sporsmal);
-                return <SporsmalOgSvar key={i} SporsmalOgSvar={sporOgSvar} />
-            }
+        return <div className="sporsmalContainer">
+            {this.state.sporOgSvar.map(sporOgSvar =>
+                <SporsmalOgSvar key={sporOgSvar.id} sporsmalOgSvar={sporOgSvar} />
             )}
         </div>;
     }
-
 
     private hentAlleSporsmalOgSvar(): void {
         fetch("api/sporsmalogsvar/")
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
-                    return response.json() as Promise<SporsmalOgSvarI[]>;
+                    return response.json() as Promise<Model.SporsmalOgSvarI[]>;
                 } else {
                     return Promise.reject(new Error(response.statusText))
                 }
             })
             .then(json => {
                 this.setState({
-                    sprosmal: json,
+                    sporOgSvar: json,
                     laster: false
                 });
-                console.log("Oppdatert state: " + this.state.sprosmal);
             })
             .catch(error => {
                 this.setState({ laster: false });

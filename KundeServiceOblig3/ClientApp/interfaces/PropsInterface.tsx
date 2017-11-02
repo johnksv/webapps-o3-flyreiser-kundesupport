@@ -3,17 +3,17 @@
 import { SporsmalOgSvarI, SporsmalI, SkjemaSporsmalI, SvarI } from "./ModelInterface";
 
 export interface SporsmalOgSvarIProps {
-    SporsmalOgSvar: SporsmalOgSvarI;
+    sporsmalOgSvar: SporsmalOgSvarI;
 }
 
 export interface SporsmalIProps {
-    Sporsmal: SporsmalI;
+    sporsmal: SporsmalI;
 }
 
 export interface SvarIProps {
-    Svar?: SvarI;
+    svar?: SvarI;
 }
 
 export interface SkjemaSporsmalIProps {
-    SkjemaSporsmal: SkjemaSporsmalI;
+    skjemaSporsmal: SkjemaSporsmalI;
 }

@@ -1,26 +1,28 @@
 ﻿
 export interface SporsmalOgSvarI {
     id: number;
-    Sporsmal: SporsmalI;
-    Svar?: SvarI;
+    sporsmal: SporsmalI;
+    svar?: SvarI;
     publisert: boolean;
 }
 
 export interface SporsmalI {
-    Sporsmal: string;
-    Stilt: Date;
+    id: number;
+    sporsmal: string;
+    stilt: string;
 }
 
 export interface SvarI {
-    Svar: string;
-    Besvart: Date;
-    BesvartAv: string;
+    id: number;
+    svar: string;
+    besvart: string;
+    //besvartAv: string;
 }
 
 export interface SkjemaSporsmalI {
-    Fornavn: string;
-    Etternavn: string;
-    Epost: string;
-    Telefon: string;
-    Sporsmal: SporsmalOgSvarI;
+    fornavn: string;
+    etternavn: string;
+    epost: string;
+    telefon: string;
+    sporsmal: SporsmalOgSvarI;
 }
