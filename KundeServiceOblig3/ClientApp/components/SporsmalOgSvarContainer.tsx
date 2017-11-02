@@ -11,9 +11,9 @@ interface StateInterface {
 
 export default class SporsmalOgSvarContainer extends React.Component<RouteComponentProps<{}>, StateInterface> {
 
-    constructor(props : any) {
+    constructor(props: any) {
         super(props);
-        this.state= {
+        this.state = {
             sporOgSvar: [],
             laster: true
         };
@@ -33,9 +33,12 @@ export default class SporsmalOgSvarContainer extends React.Component<RouteCompon
         }
 
         return <div className="sporsmalContainer">
-            {this.state.sporOgSvar.map(sporOgSvar =>
-                <SporsmalOgSvar key={sporOgSvar.id} sporsmalOgSvar={sporOgSvar} />
-            )}
+            <h1>Spørsmål og svar</h1>
+            <div className="panel-group">
+                {this.state.sporOgSvar.map(sporOgSvar =>
+                    <SporsmalOgSvar key={sporOgSvar.id} sporsmalOgSvar={sporOgSvar} />
+                )}
+            </div>
         </div>;
     }
 
