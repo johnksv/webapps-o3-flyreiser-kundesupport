@@ -9,32 +9,61 @@ export default class Skjema extends React.Component<RouteComponentProps<{}>, Skj
     constructor(props: any) {
         super(props);
         this.state = {
-            validForm: false
+            validForm: true
         };
 
         this.submitSkjema = this.submitSkjema.bind(this);
+        this.settValid = this.settValid.bind(this);
+    }
 
+    settValid(feltNavn: string, valid: boolean) {
+        this.setState({
+            ["valid" + feltNavn]: valid
+        });
     }
 
     public render() {
+        let feilmelding: JSX.Element | undefined;
+        if (!this.state.validForm) {
+            feilmelding = <span className="text-danger field-validation-error ">Et eller flere felter inneholder ugyldig verdi. Rett dette før du kan sende inn spørsmål.</span>;
+        }
+
         return <form onSubmit={this.submitSkjema}>
 
-            <Input validering={true} navn="Fornavn" feilmelding="Fornavn kan kun være bokstaver (A-Å)." regex="^[A-Za-zæøåÆØÅ\\- ]{2,}$"/>
+            <Input navn="Fornavn" feilmelding="Fornavn kan kun være bokstaver (A-Å)." regex="^[A-Za-zæøåÆØÅ\\- ]{2,}$" settValid={this.settValid} />
 
-            <Input validering={true} navn="Etternavn" feilmelding="Etternavn kan kun være bokstaver (A-Å)." regex="^[A-Za-zæøåÆØÅ\\- ]{2,}$" />
+            <Input navn="Etternavn" feilmelding="Etternavn kan kun være bokstaver (A-Å)." regex="^[A-Za-zæøåÆØÅ\\- ]{2,}$" settValid={this.settValid} />
 
-            <Input validering={true} navn="Epost" feilmelding="Ugyldig format på e-postadressen." regex="^[A-Za-zæøåÆØÅ0-9_\\-,\\.+ ]+@[a-zA-Z0-9]+\\.[a-zA-Z]+$" />
+            <Input navn="Epost" feilmelding="Ugyldig format på e-postadressen." regex="^[A-Za-zæøåÆØÅ0-9_\\-,\\.+ ]+@[a-zA-Z0-9]+\\.[a-zA-Z]+$" settValid={this.settValid} />
 
-            <Input validering={true} navn="Telefon" feilmelding="Telefonnummer må bestå av 8 tall, og ikke starte på 0." regex="^[1-9][0-9]{7}$" />
+            <Input navn="Telefon" feilmelding="Telefonnummer må bestå av 8 tall, og ikke starte på 0." regex="^[1-9][0-9]{7}$" settValid={this.settValid} />
 
-            <Input validering={true} navn="Sporsmal" feilmelding="Spørsmål inneholder ugyldig tegn." regex="^[A-Za-zæøåÆØÅ\\- ]+$" regexFlags="m" />
+            <Input navn="Sporsmal" feilmelding="Spørsmål inneholder ugyldig tegn." regex="^[0-9A-Za-zæøåÆØÅ\\-?!., ]+$" regexFlags="m" settValid={this.settValid} disableAutocomplete={true} />
+
+            {feilmelding}
             
+            <br/>
             <button type="submit" className="btn btn-primary">Send inn</button>
+            
         </form>;
     }
 
     private submitSkjema(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        const inputfelter = ["Fornavn", "Etternavn", "Epost", "Telefon", "Sporsmal"];
+        
+        const gyldigeFelter = inputfelter.map(element => {
+            const { ["valid" + element]: valid } = this.state;
+            return valid;
+        });
+
+        const antallUgyldige = gyldigeFelter.filter(gyldig => !gyldig).length;
+        if (antallUgyldige != 0) {
+            console.log("Form er ikke gyldig " + antallUgyldige);
+            this.setState({validForm: false});
+            return;
+        }
+        this.setState({ validForm: true });
 
         console.log(event.currentTarget);
     }

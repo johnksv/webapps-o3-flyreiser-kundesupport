@@ -2,7 +2,7 @@
 import { InputI } from "../interfaces/PropsInterface";
 
 interface InputState {
-    verdi: any;
+    verdi: string;
     valid: boolean;
 }
 
@@ -24,28 +24,29 @@ export default class Input extends React.Component<InputI, InputState> {
     public render() {
         const navn = this.props.navn;
         const id = this.props.id ? this.props.id : navn;
-        if (this.props.validering) {
-            return <div className={this.genererClassNameInputGroup()}>
-                <label htmlFor={navn}>{navn}</label>
-                <input type="text" name={navn} id={id} className="form-control" value={this.state.verdi}
-                    required onChange={this.validerInput} />
-                <span className={this.genererSpanClassNameForInput()} aria-hidden="true"></span>
-                <span className={this.genererFeilmeldingClassName()}>{this.props.feilmelding}</span>
+        let htmlProps = {
+            name: navn,
+            id: id,
+            autoComplete: "",
+            required: true,
+            value: this.state.verdi,
+            onChange: this.validerInput
+        };
 
-            </div>;
-        } else {
-            return <div className={this.genererClassNameInputGroup()}>
-                <label htmlFor={navn}>{navn}</label>
-                <input type="text" name={navn} id={id} className="form-control" value={this.state.verdi} required onChange={this.validerInput} />
-            </div>;
+        if (this.props.disableAutocomplete) {
+            htmlProps.autoComplete = "off";
         }
+
+        return <div className={this.genererClassNameInputGroup()}>
+            <label htmlFor={navn}>{navn}</label>
+            <input type="text" {...htmlProps} className="form-control" />
+            <span className={this.genererSpanClassNameForInput()} aria-hidden="true"></span>
+            <span className={this.genererFeilmeldingClassName()}>{this.props.feilmelding}</span>
+        </div>;
     }
 
     private genererClassNameInputGroup(): string {
         let resultat = "form-group ";
-        if (!this.props.validering) {
-            return resultat;
-        }
 
         resultat += "has-feedback ";
         resultat += this.state.valid ? "has-success" : "has-warning";
@@ -60,7 +61,7 @@ export default class Input extends React.Component<InputI, InputState> {
 
     private genererFeilmeldingClassName(): string {
         let resultat = "text-danger field-validation-error ";
-        if (this.state.valid) {
+        if (this.state.valid || this.state.verdi.length == 0) {
             resultat += "hidden";
         }
         return resultat;
@@ -68,9 +69,9 @@ export default class Input extends React.Component<InputI, InputState> {
 
     private validerInput(event: React.ChangeEvent<HTMLInputElement>) {
         let resultat = true;
+        const value = event.currentTarget.value;
 
         if (this.props.regex) {
-            const value = event.currentTarget.value;
             let regex;
             if (this.props.regexFlags) {
                 regex = new RegExp(this.props.regex, this.props.regexFlags);
@@ -80,10 +81,13 @@ export default class Input extends React.Component<InputI, InputState> {
             resultat = regex.test(value);
         }
 
+        resultat = resultat && value.trim().length > 0;
+
         this.setState({
             verdi: event.currentTarget.value,
             valid: resultat
         });
+        this.props.settValid(this.props.navn, resultat);
     }
 
 }

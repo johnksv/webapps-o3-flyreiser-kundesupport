@@ -24,5 +24,6 @@ export interface InputI {
     regex?: string;
     regexFlags?: string;
     feilmelding?: string;
-    validering: boolean;
+    disableAutocomplete?: boolean;
+    settValid: any;
 }
