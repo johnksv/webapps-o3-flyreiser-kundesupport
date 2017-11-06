@@ -83,11 +83,12 @@ export default class Input extends React.Component<InputI, InputState> {
 
         resultat = resultat && value.trim().length > 0;
 
+        const verdi = event.currentTarget.value;
         this.setState({
-            verdi: event.currentTarget.value,
+            verdi: verdi,
             valid: resultat
         });
-        this.props.settValid(this.props.navn, resultat);
+        this.props.settValid(this.props.navn, resultat, verdi);
     }
 
 }

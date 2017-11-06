@@ -1,5 +1,6 @@
 ﻿import * as React from "react";
 import { RouteComponentProps } from 'react-router';
+import 'isomorphic-fetch';
 import { SkjemaStateI } from "../interfaces/ModelInterface";
 import { InputI } from "../interfaces/PropsInterface";
 import Input from "./Input";
@@ -16,9 +17,10 @@ export default class Skjema extends React.Component<RouteComponentProps<{}>, Skj
         this.settValid = this.settValid.bind(this);
     }
 
-    settValid(feltNavn: string, valid: boolean) {
+    settValid(feltNavn: string, valid: boolean, verdi: string) {
         this.setState({
-            ["valid" + feltNavn]: valid
+            ["valid" + feltNavn]: valid,
+            [feltNavn]: verdi
         });
     }
 
@@ -41,17 +43,17 @@ export default class Skjema extends React.Component<RouteComponentProps<{}>, Skj
             <Input navn="Sporsmal" feilmelding="Spørsmål inneholder ugyldig tegn." regex="^[0-9A-Za-zæøåÆØÅ\\-?!., ]+$" regexFlags="m" settValid={this.settValid} disableAutocomplete={true} />
 
             {feilmelding}
-            
-            <br/>
+
+            <br />
             <button type="submit" className="btn btn-primary">Send inn</button>
-            
+
         </form>;
     }
 
     private submitSkjema(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const inputfelter = ["Fornavn", "Etternavn", "Epost", "Telefon", "Sporsmal"];
-        
+
         const gyldigeFelter = inputfelter.map(element => {
             const { ["valid" + element]: valid } = this.state;
             return valid;
@@ -60,11 +62,28 @@ export default class Skjema extends React.Component<RouteComponentProps<{}>, Skj
         const antallUgyldige = gyldigeFelter.filter(gyldig => !gyldig).length;
         if (antallUgyldige != 0) {
             console.log("Form er ikke gyldig " + antallUgyldige);
-            this.setState({validForm: false});
+            this.setState({ validForm: false });
             return;
         }
         this.setState({ validForm: true });
 
-        console.log(event.currentTarget);
+        const skjemadata = {
+            Fornavn: this.state.Fornavn,
+            Etternavn: this.state.Etternavn,
+            Epost: this.state.Epost,
+            Telefon: this.state.Telefon,
+            Sporsmal: this.state.Sporsmal
+        };
+
+        const json = JSON.stringify(skjemadata);
+        fetch("api/sporsmalogsvar/", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: json
+        }).then(function (res) { console.log(res) })
+            .catch(function (res) { console.log(res) })
     }
 }
