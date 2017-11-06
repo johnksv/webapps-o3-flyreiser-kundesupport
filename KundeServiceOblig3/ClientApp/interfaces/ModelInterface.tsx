@@ -26,3 +26,7 @@ export interface SkjemaSporsmalI {
     telefon: string;
     sporsmal: SporsmalOgSvarI;
 }
+
+export interface SkjemaStateI {
+    validForm: boolean;
+}

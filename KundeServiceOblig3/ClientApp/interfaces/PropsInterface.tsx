@@ -17,3 +17,12 @@ export interface SvarIProps {
 export interface SkjemaSporsmalIProps {
     skjemaSporsmal: SkjemaSporsmalI;
 }
+
+export interface InputI {
+    navn: string;
+    id?: string;
+    regex?: string;
+    regexFlags?: string;
+    feilmelding?: string;
+    validering: boolean;
+}
