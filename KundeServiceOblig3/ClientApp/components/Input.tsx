@@ -24,6 +24,7 @@ export default class Input extends React.Component<InputI, InputState> {
     public render() {
         const navn = this.props.navn;
         const id = this.props.id ? this.props.id : navn;
+        const tittel = this.props.tittel ? this.props.tittel : navn;
         let htmlProps = {
             name: navn,
             id: id,
@@ -38,7 +39,7 @@ export default class Input extends React.Component<InputI, InputState> {
         }
 
         return <div className={this.genererClassNameInputGroup()}>
-            <label htmlFor={navn}>{navn}</label>
+            <label htmlFor={navn}>{tittel}</label>
             <input type="text" {...htmlProps} className="form-control" />
             <span className={this.genererSpanClassNameForInput()} aria-hidden="true"></span>
             <span className={this.genererFeilmeldingClassName()}>{this.props.feilmelding}</span>

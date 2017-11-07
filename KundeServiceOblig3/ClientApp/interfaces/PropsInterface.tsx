@@ -26,4 +26,5 @@ export interface InputI {
     feilmelding?: string;
     disableAutocomplete?: boolean;
     settValid: any;
+    tittel?: string;
 }

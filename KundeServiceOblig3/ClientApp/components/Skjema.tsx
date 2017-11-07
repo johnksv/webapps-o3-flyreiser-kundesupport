@@ -40,7 +40,7 @@ export default class Skjema extends React.Component<RouteComponentProps<{}>, Skj
 
             <Input navn="Telefon" feilmelding="Telefonnummer må bestå av 8 tall, og ikke starte på 0." regex="^[1-9][0-9]{7}$" settValid={this.settValid} />
 
-            <Input navn="Sporsmal" feilmelding="Spørsmål inneholder ugyldig tegn." regex="^[0-9A-Za-zæøåÆØÅ\\-?!., ]+$" regexFlags="m" settValid={this.settValid} disableAutocomplete={true} />
+            <Input navn="Sporsmal" tittel="Spørsmål" feilmelding="Spørsmål inneholder ugyldig tegn." regex="^[0-9A-Za-zæøåÆØÅ\\-?!., ]+$" regexFlags="m" settValid={this.settValid} disableAutocomplete={true} />
 
             {feilmelding}
 
@@ -72,11 +72,11 @@ export default class Skjema extends React.Component<RouteComponentProps<{}>, Skj
             Etternavn: this.state.Etternavn,
             Epost: this.state.Epost,
             Telefon: this.state.Telefon,
-            Sporsmal: this.state.Sporsmal
+            "SporsmalOgSvar.Sporsmal.Sporsmal": this.state.Sporsmal
         };
 
         const json = JSON.stringify(skjemadata);
-        fetch("api/sporsmalogsvar/", {
+        fetch("api/SkjemaSporsmal/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

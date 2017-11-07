@@ -101,7 +101,7 @@ namespace KundeServiceOblig3.Controllers
 
         // api/SporsmalOgSvar
         [HttpPost]
-        public IActionResult PostSporsmalC([FromBody] SporsmalC sporsmalC)
+        public IActionResult PostSporsmal([FromBody] SporsmalC sporsmalC)
         {
             if (!ModelState.IsValid)
             {
