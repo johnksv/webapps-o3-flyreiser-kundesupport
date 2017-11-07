@@ -8,8 +8,10 @@ export default class KontaktOss extends React.Component<RouteComponentProps<{}>,
     public render() {
         return <div>
             <h1>Kontakt oss</h1>
-            <p>Fant du ikke svar på spørsmålet du lurte på? Fortvil ikke. Kontakt oss med skjemaet under.</p>
-            <Skjema />
+            <p>Fant du ikke svar på spørsmålet du lurte på? Fortvil ikke. Kontakt oss via skjemaet under.</p>
+            <div className="col-md-6">
+                <Skjema />
+            </div>
         </div>;
     }
 

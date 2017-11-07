@@ -1,6 +1,6 @@
 ﻿//Legger til props som et eget interface for type safety
 
-import { SporsmalOgSvarI, SporsmalI, SkjemaSporsmalI, SvarI } from "./ModelInterface";
+import { SporsmalOgSvarI, SporsmalI, SkjemaSporsmalI, SvarI, KategoriI } from "./ModelInterface";
 
 export interface SporsmalOgSvarIProps {
     sporsmalOgSvar: SporsmalOgSvarI;
@@ -31,4 +31,10 @@ export interface InputI {
     disableAutocomplete?: boolean;
     settValid: any;
     tittel?: string;
+}
+
+export interface KategoriIProps {
+    kategori: KategoriI;
+    index: number;
+    ossModus: boolean;
 }
