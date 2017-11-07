@@ -11,7 +11,6 @@ using System;
 namespace KundeServiceOblig3.Controllers
 {
     [Produces("application/json")]
-    [Route("api/SporsmalOgSvar")]
     public class SporsmalOgSvarController : Controller
     {
         private readonly DB db;
@@ -23,8 +22,9 @@ namespace KundeServiceOblig3.Controllers
 
 
         // api/SporsmalOgSvar
+        [Route("api/kategoriermedsvar")]
         [HttpGet]
-        public IActionResult GetSporsmalOgSvar()
+        public IActionResult GetKategorierMedSvar()
         {
             var kategoriListe = db.Kategorier
                 .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Sporsmal)

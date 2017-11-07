@@ -20,7 +20,7 @@ export default class OfteStilteSporsmal extends React.Component<RouteComponentPr
     }
 
     componentDidMount() {
-        this.hentAlleSporsmalOgSvar();
+        this.hentAlleKategorierMedSvar();
     }
 
     public render() {
@@ -41,8 +41,8 @@ export default class OfteStilteSporsmal extends React.Component<RouteComponentPr
             )}
         </div>;
     }
-    private hentAlleSporsmalOgSvar(): void {
-        fetch("api/sporsmalogsvar/")
+    private hentAlleKategorierMedSvar(): void {
+        fetch("api/kategoriermedsvar/")
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     return response.json() as Promise<KategoriI[]>;
