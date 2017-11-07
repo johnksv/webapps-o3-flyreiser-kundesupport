@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.DBModel;
+using KundeServiceOblig3.Models;
+using System;
 
 namespace KundeServiceOblig3.Controllers
 {
@@ -27,7 +29,8 @@ namespace KundeServiceOblig3.Controllers
             var sporsmalSvarListe = db.SporsmalOgSvar
                 .Include(s => s.Sporsmal)
                 .Include(s => s.Svar)
-                .Include(s => s.Svar.BesvartAvKundebehandler).ToList();
+                .Include(s => s.Svar.BesvartAvKundebehandler)
+                .Include(s => s.Kunde).ToList();
             foreach (var sporsmalSvar in sporsmalSvarListe)
             {
                 if (sporsmalSvar.Svar != null)
@@ -35,6 +38,12 @@ namespace KundeServiceOblig3.Controllers
                     sporsmalSvar.Svar.BesvartAv = sporsmalSvar.Svar.BesvartAvKundebehandler.Brukernavn;
                     sporsmalSvar.Svar.BesvartAvKundebehandler = null;
                 }
+                if(sporsmalSvar.Kunde != null)
+                {
+                    sporsmalSvar.Kunde.Sporsmal = null;
+                }
+                    
+
                 resultat.Add(sporsmalSvar);
             }
 
@@ -101,31 +110,34 @@ namespace KundeServiceOblig3.Controllers
 
         // api/SporsmalOgSvar
         [HttpPost]
-        public IActionResult PostSporsmal([FromBody] SporsmalC sporsmalC)
+        public IActionResult PostSporsmal([FromBody] SkjemaSporsmalView innSkjemaSporsmal)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Sporsmal.Add(sporsmalC);
-            try
+            var kunde = new Kunde
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
+                Fornavn = innSkjemaSporsmal.Fornavn,
+                Etternavn = innSkjemaSporsmal.Etternavn,
+                Epost = innSkjemaSporsmal.Epost,
+                Telefon = innSkjemaSporsmal.Telefon,
+            };
+            var skjemasporsmal = new SporsmalOgSvar
             {
-                if (SporsmalCExists(sporsmalC.ID))
+                Sporsmal = new SporsmalC
                 {
-                    return new StatusCodeResult(StatusCodes.Status409Conflict);
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                    Sporsmal = innSkjemaSporsmal.Sporsmal,
+                    Stilt = DateTime.Now
+                },
+                Kunde = kunde
+            };
 
-            return CreatedAtAction("GetSporsmalC", new { id = sporsmalC.ID }, sporsmalC);
+            db.SporsmalOgSvar.Add(skjemasporsmal);
+            db.SaveChanges();
+
+            return CreatedAtAction("GetSkjemaSporsmal", new { id = skjemasporsmal.ID }, skjemasporsmal);
         }
 
         // api/SporsmalOgSvar/1

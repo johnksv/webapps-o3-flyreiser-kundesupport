@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DAL.DBModel
 {
-    public class SkjemaSporsmal
+    public class Kunde
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -15,6 +15,7 @@ namespace DAL.DBModel
         public string Etternavn { get; set; }
         public string Epost { get; set; }
         public string Telefon { get; set; }
-        public virtual SporsmalOgSvar SporsmalOgSvar { get; set; }
+
+        public virtual List<SporsmalOgSvar> Sporsmal { get; set; }
     }
 }

@@ -72,11 +72,11 @@ export default class Skjema extends React.Component<RouteComponentProps<{}>, Skj
             Etternavn: this.state.Etternavn,
             Epost: this.state.Epost,
             Telefon: this.state.Telefon,
-            "SporsmalOgSvar.Sporsmal.Sporsmal": this.state.Sporsmal
+            Sporsmal: this.state.Sporsmal
         };
 
         const json = JSON.stringify(skjemadata);
-        fetch("api/SkjemaSporsmal/", {
+        fetch("api/SporsmalOgSvar/", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

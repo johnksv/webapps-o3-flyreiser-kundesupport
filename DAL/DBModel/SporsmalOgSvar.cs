@@ -13,10 +13,11 @@ namespace DAL.DBModel
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int ID { get; set; }
-        [Required]
         public virtual SporsmalC Sporsmal { get; set; }
         public virtual SvarC Svar { get; set; }
 
         public bool Publisert { get; set; } = true;
+
+        public virtual Kunde Kunde { get; set; }
     }
 }

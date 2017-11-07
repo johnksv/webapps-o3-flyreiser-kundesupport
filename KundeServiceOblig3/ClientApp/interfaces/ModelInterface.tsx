@@ -4,6 +4,15 @@ export interface SporsmalOgSvarI {
     sporsmal: SporsmalI;
     svar?: SvarI;
     publisert: boolean;
+    kunde?: KundeI;
+}
+
+interface KundeI {
+    id: number;
+    fornavn: string;
+    etternavn: string;
+    epost: string;
+    telefon: string;
 }
 
 export interface SporsmalI {

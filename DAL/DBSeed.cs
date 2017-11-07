@@ -79,37 +79,35 @@ namespace DAL
                 Sporsmal = sporsmalC,
                 Svar = svarC
             };
-            var sporsmalSvarD = new SporsmalOgSvar
-            {
-                Sporsmal = sporsmalD
-            };
-
-
-            var skjemaSporsmal = new SkjemaSporsmal
+            var kunde = new Kunde
             {
                 Epost = "test@email.com",
                 Fornavn = "Ola",
                 Etternavn = "Nordmann",
                 Telefon = "12345678",
-                SporsmalOgSvar = sporsmalSvarD
+            };
+            var sporsmalSvarD = new SporsmalOgSvar
+            {
+                Sporsmal = sporsmalD,
+                Kunde = kunde
             };
 
+
             dbContext.Kundebehandlere.Add(kundebehandler);
-            /* dbContext.Svar.Add(svarA);
-            dbContext.Svar.Add(svarB);
-            dbContext.Svar.Add(svarC);
-            dbContext.Sporsmal.Add(sporsmalA);
-            dbContext.Sporsmal.Add(sporsmalB);
-            dbContext.Sporsmal.Add(sporsmalC);
-            dbContext.Sporsmal.Add(sporsmalD); */
             dbContext.SporsmalOgSvar.Add(sporsmalSvarA);
             dbContext.SporsmalOgSvar.Add(sporsmalSvarC);
             dbContext.SporsmalOgSvar.Add(sporsmalSvarB);
             dbContext.SporsmalOgSvar.Add(sporsmalSvarD);
 
-            dbContext.SkjemaSporsmal.Add(skjemaSporsmal);
+            try
+            {
 
-            dbContext.SaveChanges();
+                dbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
     }
