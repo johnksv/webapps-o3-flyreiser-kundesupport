@@ -53,6 +53,18 @@ export default class SporsmalOgSvarContainer extends React.Component<RouteCompon
                 }
             })
             .then(json => {
+                json.sort((s1, s2) => {
+                    if (s1.kategori == null && s2.kategori == null) return 0;
+                    if (s1.kategori == null) return 1;
+                    if (s2 == null) return -1;
+
+                    if (s1.kategori < s2.kategori) return 1;
+                    if (s1.kategori > s2.kategori) return -1;
+
+                    return 0;
+                });
+
+
                 this.setState({
                     sporOgSvar: json,
                     laster: false
