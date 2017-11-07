@@ -9,11 +9,11 @@ export default class Svar extends React.Component<SvarIProps, {}> {
 
             return <div className="svar">
                 <p>{this.props.svar.svar}</p>
-                <p className="text-info">Besvart av {this.props.svar.besvartAv}, den {date.toLocaleDateString()}.</p>
+                {this.props.ossModus ? "" : <p className="text-info">Besvart av {this.props.svar.besvartAv}, den {date.toLocaleDateString()}.</p> }
             </div>;
         }
         return <div className="svar">
-            <p>Dette spørsmålet mangler svar</p>
+            <p>Dette spørsmålet mangler svar.</p>
         </div>;
     }
 

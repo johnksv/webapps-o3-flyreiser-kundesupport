@@ -15,6 +15,7 @@ export interface SporsmalIProps {
 
 export interface SvarIProps {
     svar?: SvarI;
+    ossModus: boolean;
 }
 
 export interface SkjemaSporsmalIProps {
