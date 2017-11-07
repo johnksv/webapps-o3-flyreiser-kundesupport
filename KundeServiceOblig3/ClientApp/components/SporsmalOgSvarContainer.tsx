@@ -29,7 +29,8 @@ export default class SporsmalOgSvarContainer extends React.Component<RouteCompon
         }
 
         if (this.state.sporOgSvar.length == 0) {
-            return <p>Lengde er null</p>
+            //Antar at det alltid skal finnes minst 1 spørsmål i databasen
+            return <p>En feil oppsto under henting av spørsmål. Vennligst prøv igjen senere.</p>
         }
 
         return <div className="sporsmalContainer">

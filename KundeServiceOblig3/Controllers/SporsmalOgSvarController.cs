@@ -23,7 +23,7 @@ namespace KundeServiceOblig3.Controllers
 
         // api/SporsmalOgSvar
         [HttpGet]
-        public List<SporsmalOgSvar> GetSporsmalOgSvar()
+        public IActionResult GetSporsmalOgSvar()
         {
             var resultat = new List<SporsmalOgSvar>();
             var sporsmalSvarListe = db.SporsmalOgSvar
@@ -40,6 +40,7 @@ namespace KundeServiceOblig3.Controllers
                 }
                 if(sporsmalSvar.Kunde != null)
                 {
+                    //Trenger dette, om ikke vil ikke JSON bli formatert korrekt
                     sporsmalSvar.Kunde.Sporsmal = null;
                 }
                     
@@ -47,7 +48,7 @@ namespace KundeServiceOblig3.Controllers
                 resultat.Add(sporsmalSvar);
             }
 
-            return resultat;
+            return Ok(resultat);
         }
 
         // api/SporsmalOgSvar/1
@@ -59,14 +60,11 @@ namespace KundeServiceOblig3.Controllers
                 return BadRequest(ModelState);
             }
 
-            var sporsmal = db.Sporsmal.SingleOrDefault(m => m.ID == id);
+            var sporsmalSvar = db.SporsmalOgSvar.SingleOrDefault(m => m.Sporsmal.ID == id);
 
-            if (sporsmal != null)
+            if (sporsmalSvar != null)
             {
-                var sporsmalSvar = new SporsmalOgSvar
-                {
-                    Sporsmal = sporsmal
-                };
+                
 
                 return Ok(sporsmalSvar);
             }

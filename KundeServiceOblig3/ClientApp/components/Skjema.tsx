@@ -1,11 +1,10 @@
 ﻿import * as React from "react";
-import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { SkjemaStateI } from "../interfaces/ModelInterface";
 import { InputI } from "../interfaces/PropsInterface";
 import Input from "./Input";
 
-export default class Skjema extends React.Component<RouteComponentProps<{}>, SkjemaStateI> {
+export default class Skjema extends React.Component<{}, SkjemaStateI> {
 
     constructor(props: any) {
         super(props);
