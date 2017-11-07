@@ -4,10 +4,13 @@ import { SporsmalOgSvarI, SporsmalI, SkjemaSporsmalI, SvarI } from "./ModelInter
 
 export interface SporsmalOgSvarIProps {
     sporsmalOgSvar: SporsmalOgSvarI;
+    //Ofte stilte spørsmål-modus = Finere formatering
+    ossModus: boolean;
 }
 
 export interface SporsmalIProps {
     sporsmal: SporsmalI;
+    ossModus: boolean;
 }
 
 export interface SvarIProps {

@@ -62,7 +62,7 @@ export default class Kategori extends React.Component<RouteComponentProps<{}>, S
     }
 
     private renderSporsmal(sporsmalOgSvar: SporsmalOgSvarI[]): any {
-        return sporsmalOgSvar.map(sporOgSvar => <SporsmalOgSvar key={sporOgSvar.id} sporsmalOgSvar={sporOgSvar} />)
+        return sporsmalOgSvar.map(sporOgSvar => <SporsmalOgSvar key={sporOgSvar.id} sporsmalOgSvar={sporOgSvar} ossModus={true}/>)
     }
 
 

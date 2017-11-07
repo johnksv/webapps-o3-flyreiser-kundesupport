@@ -6,10 +6,11 @@ export default class Sporsmal extends React.Component<SporsmalIProps, SporsmalI>
 
     public render() {
         let date = new Date(this.props.sporsmal.stilt);
+        
+        if (this.props.ossModus) {
+            return <h5>{this.props.sporsmal.sporsmal}</h5>;
+        }
 
-        return <div className="Sporsmal">
-            <p>{this.props.sporsmal.sporsmal}</p>
-            <span>{date.toLocaleDateString()}</span>
-        </div>;
+        return <h5>{this.props.sporsmal.sporsmal} <small>- Stilt den {date.toLocaleDateString()}</small></h5>;
     }
 }

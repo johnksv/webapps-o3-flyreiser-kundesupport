@@ -11,7 +11,7 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
         return <div className="panel-group">
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <Sporsmal sporsmal={this.props.sporsmalOgSvar.sporsmal} />
+                    <Sporsmal sporsmal={this.props.sporsmalOgSvar.sporsmal} ossModus={this.props.ossModus} />
                 </div>
                 <div className="panel-body">
                     <Svar svar={this.props.sporsmalOgSvar.svar} />
