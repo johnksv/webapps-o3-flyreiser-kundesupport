@@ -15,7 +15,7 @@ namespace DAL.DBModel
         public int ID { get; set; }
         public virtual SporsmalC Sporsmal { get; set; }
         public virtual SvarC Svar { get; set; }
-
+        public string Kategori { get; set; }
         public bool Publisert { get; set; } = true;
 
         public virtual Kunde Kunde { get; set; }

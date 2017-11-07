@@ -4,6 +4,7 @@ export interface SporsmalOgSvarI {
     sporsmal: SporsmalI;
     svar?: SvarI;
     publisert: boolean;
+    kategori: string;
     kunde?: KundeI;
 }
 

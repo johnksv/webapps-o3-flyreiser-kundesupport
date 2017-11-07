@@ -67,17 +67,20 @@ namespace DAL
             var sporsmalSvarA = new SporsmalOgSvar
             {
                 Sporsmal = sporsmalA,
-                Svar = svarA
+                Svar = svarA,
+                Kategori = "Generelt"
             };
             var sporsmalSvarB = new SporsmalOgSvar
             {
                 Sporsmal = sporsmalB,
-                Svar = svarB
+                Svar = svarB,
+                Kategori = "Generelt"
             };
             var sporsmalSvarC = new SporsmalOgSvar
             {
                 Sporsmal = sporsmalC,
-                Svar = svarC
+                Svar = svarC,
+                Kategori = "Generelt"
             };
             var kunde = new Kunde
             {
