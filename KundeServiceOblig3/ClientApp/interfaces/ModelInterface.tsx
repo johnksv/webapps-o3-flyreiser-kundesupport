@@ -1,10 +1,15 @@
-﻿
+﻿export interface KategoriI {
+    navn: string;
+    sporsmalOgSvar: SporsmalOgSvarI[];
+}
+
+
 export interface SporsmalOgSvarI {
     id: number;
     sporsmal: SporsmalI;
     svar?: SvarI;
     publisert: boolean;
-    kategori: string;
+    kategori?: string;
     kunde?: KundeI;
 }
 

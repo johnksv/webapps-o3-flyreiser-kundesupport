@@ -21,34 +21,35 @@ namespace KundeServiceOblig3.Controllers
             db = dbContext;
         }
 
+
         // api/SporsmalOgSvar
         [HttpGet]
         public IActionResult GetSporsmalOgSvar()
         {
-            var resultat = new List<SporsmalOgSvar>();
-            var sporsmalSvarListe = db.SporsmalOgSvar
-                .Include(s => s.Sporsmal)
-                .Include(s => s.Svar)
-                .Include(s => s.Svar.BesvartAvKundebehandler)
-                .Include(s => s.Kunde).ToList();
-            foreach (var sporsmalSvar in sporsmalSvarListe)
+            var kategoriListe = db.Kategorier
+                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Sporsmal)
+                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Svar)
+                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Svar.BesvartAvKundebehandler)
+                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Kunde).ToList();
+            foreach (var kategori in kategoriListe)
             {
-                if (sporsmalSvar.Svar != null)
+                //Må sette navigasjons-propertyene til null for at JSON formateres korrekt
+                foreach (var sporsmalSvar in kategori.SporsmalOgSvar)
                 {
-                    sporsmalSvar.Svar.BesvartAv = sporsmalSvar.Svar.BesvartAvKundebehandler.Brukernavn;
-                    sporsmalSvar.Svar.BesvartAvKundebehandler = null;
+                    sporsmalSvar.Kategori = null;
+                    if (sporsmalSvar.Svar != null)
+                    {
+                        sporsmalSvar.Svar.BesvartAv = sporsmalSvar.Svar.BesvartAvKundebehandler.Brukernavn;
+                        sporsmalSvar.Svar.BesvartAvKundebehandler = null;
+                    }
+                    if (sporsmalSvar.Kunde != null)
+                    {
+                        sporsmalSvar.Kunde.Sporsmal = null;
+                    }
                 }
-                if(sporsmalSvar.Kunde != null)
-                {
-                    //Trenger dette, om ikke vil ikke JSON bli formatert korrekt
-                    sporsmalSvar.Kunde.Sporsmal = null;
-                }
-                    
-
-                resultat.Add(sporsmalSvar);
             }
 
-            return Ok(resultat);
+            return Ok(kategoriListe);
         }
 
         // api/SporsmalOgSvar/1
@@ -64,7 +65,7 @@ namespace KundeServiceOblig3.Controllers
 
             if (sporsmalSvar != null)
             {
-                
+
 
                 return Ok(sporsmalSvar);
             }

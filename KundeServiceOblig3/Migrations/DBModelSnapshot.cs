@@ -20,6 +20,18 @@ namespace KundeServiceOblig3.Migrations
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DAL.DBModel.Kategori", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Navn");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Kategorier");
+                });
+
             modelBuilder.Entity("DAL.DBModel.Kunde", b =>
                 {
                     b.Property<int>("ID")
@@ -71,17 +83,19 @@ namespace KundeServiceOblig3.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Kategori");
+                    b.Property<int>("KategoriID");
 
                     b.Property<int?>("KundeID");
 
                     b.Property<bool>("Publisert");
 
-                    b.Property<int?>("SporsmalID");
+                    b.Property<int>("SporsmalID");
 
                     b.Property<int?>("SvarID");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("KategoriID");
 
                     b.HasIndex("KundeID");
 
@@ -112,13 +126,19 @@ namespace KundeServiceOblig3.Migrations
 
             modelBuilder.Entity("DAL.DBModel.SporsmalOgSvar", b =>
                 {
+                    b.HasOne("DAL.DBModel.Kategori", "Kategori")
+                        .WithMany("SporsmalOgSvar")
+                        .HasForeignKey("KategoriID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("DAL.DBModel.Kunde", "Kunde")
                         .WithMany("Sporsmal")
                         .HasForeignKey("KundeID");
 
                     b.HasOne("DAL.DBModel.SporsmalC", "Sporsmal")
                         .WithMany()
-                        .HasForeignKey("SporsmalID");
+                        .HasForeignKey("SporsmalID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DAL.DBModel.SvarC", "Svar")
                         .WithMany()

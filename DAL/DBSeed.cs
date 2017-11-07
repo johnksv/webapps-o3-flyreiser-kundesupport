@@ -63,24 +63,28 @@ namespace DAL
                 Sporsmal = "Dere flyr ikke dit jeg vil. Når vil det komme reiser til Asia?",
                 Stilt = DateTime.Now
             };
+            var generelt = new Kategori
+            {
+                Navn = "Generelt"
+            };
 
             var sporsmalSvarA = new SporsmalOgSvar
             {
                 Sporsmal = sporsmalA,
                 Svar = svarA,
-                Kategori = "Generelt"
+                Kategori = generelt
             };
             var sporsmalSvarB = new SporsmalOgSvar
             {
                 Sporsmal = sporsmalB,
                 Svar = svarB,
-                Kategori = "Generelt"
+                Kategori = generelt
             };
             var sporsmalSvarC = new SporsmalOgSvar
             {
                 Sporsmal = sporsmalC,
                 Svar = svarC,
-                Kategori = "Generelt"
+                Kategori = generelt
             };
             var kunde = new Kunde
             {
@@ -92,7 +96,8 @@ namespace DAL
             var sporsmalSvarD = new SporsmalOgSvar
             {
                 Sporsmal = sporsmalD,
-                Kunde = kunde
+                Kunde = kunde,
+                Kategori = new Kategori()
             };
 
 

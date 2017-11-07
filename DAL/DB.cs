@@ -15,6 +15,7 @@ namespace DAL
         public virtual DbSet<SporsmalOgSvar> SporsmalOgSvar { get; set; }
         public virtual DbSet<Kundebehandler> Kundebehandlere { get; set; }
         public virtual DbSet<Kunde> Kunder { get; set; }
+        public virtual DbSet<Kategori> Kategorier { get; set; }
 
     }
 }

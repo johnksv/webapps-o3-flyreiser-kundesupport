@@ -33,7 +33,7 @@
     <TypeScriptCompile Include="ClientApp\components\Innsending.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Sporsmal.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SporsmalOgSvar.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\SporsmalOgSvarContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Kategori.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Svar.tsx" />
     <TypeScriptCompile Include="ClientApp\interfaces\ModelInterface.tsx" />
   </ItemGroup>
