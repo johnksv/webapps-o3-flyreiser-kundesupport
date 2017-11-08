@@ -24,18 +24,20 @@ export default class OfteStilteSporsmal extends React.Component<RouteComponentPr
     }
 
     public render() {
+        let lastemelding;
         if (this.state.laster) {
-            return <p>Laster</p>
+            lastemelding = <p>Laster</p>;
         }
 
-        if (this.state.kategorier.length == 0) {
+        if (this.state.kategorier.length == 0 && lastemelding == undefined) {
             //Antar at det alltid skal finnes minst 1 spørsmål i databasen
-            return <p>En feil oppsto under henting av spørsmål. Vennligst prøv igjen senere. (Se konsollen for feilmelding)</p>
+            lastemelding = <p className="text-danger">En feil oppsto under henting av spørsmål. Vennligst prøv igjen senere. (Se konsollen for feilmelding)</p>;
         }
 
         return <div className="sporsmalContainer">
             <h1>Ofte stilte spørsmål</h1>
             <p>Spørsmålene er delt inn i kategorier slik at du enkelt kan finne frem til hva du lurer på.</p>
+            {lastemelding}
             {this.state.kategorier.map((kategori, i) =>
                 <Kategori kategori={kategori} index={i} ossModus={true} key={i} />
             )}
