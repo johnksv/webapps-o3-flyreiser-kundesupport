@@ -21,7 +21,6 @@ namespace KundeServiceOblig3.Controllers
         }
 
 
-        // api/SporsmalOgSvar
         [Route("api/kategoriermedsvar")]
         [HttpGet]
         public IActionResult GetKategorierMedSvar()
@@ -52,62 +51,7 @@ namespace KundeServiceOblig3.Controllers
             return Ok(kategoriListe);
         }
 
-        // api/SporsmalOgSvar/1
-        [HttpGet("{id}")]
-        public IActionResult GetSporsmalOgSvar([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var sporsmalSvar = db.SporsmalOgSvar.SingleOrDefault(m => m.Sporsmal.ID == id);
-
-            if (sporsmalSvar != null)
-            {
-
-
-                return Ok(sporsmalSvar);
-            }
-            return NotFound();
-        }
-
-        // api/SporsmalOgSvar/1
-        [HttpPut("{id}")]
-        public IActionResult PutSporsmalC([FromRoute] int id, [FromBody] SporsmalC sporsmalC)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != sporsmalC.ID)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(sporsmalC).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SporsmalCExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // api/SporsmalOgSvar
+        [Route("api/sporsmalogsvar")]
         [HttpPost]
         public IActionResult PostSporsmal([FromBody] SkjemaSporsmalView innSkjemaSporsmal)
         {
@@ -137,27 +81,6 @@ namespace KundeServiceOblig3.Controllers
             db.SaveChanges();
 
             return CreatedAtAction("GetSkjemaSporsmal", new { id = skjemasporsmal.ID }, skjemasporsmal);
-        }
-
-        // api/SporsmalOgSvar/1
-        [HttpDelete("{id}")]
-        public IActionResult DeleteSporsmalC([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var sporsmalC = db.Sporsmal.SingleOrDefault(m => m.ID == id);
-            if (sporsmalC == null)
-            {
-                return NotFound();
-            }
-
-            db.Sporsmal.Remove(sporsmalC);
-            db.SaveChanges();
-
-            return Ok(sporsmalC);
         }
 
         private bool SporsmalCExists(int id)
