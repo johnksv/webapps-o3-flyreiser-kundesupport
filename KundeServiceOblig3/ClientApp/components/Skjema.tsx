@@ -1,10 +1,10 @@
 ﻿import * as React from "react";
 import 'isomorphic-fetch';
 import { SkjemaStateI } from "../interfaces/ModelInterface";
-import { InputI } from "../interfaces/PropsInterface";
+import { SkjemaIProps, InputI } from "../interfaces/PropsInterface";
 import Input from "./Input";
 
-export default class Skjema extends React.Component<{}, SkjemaStateI> {
+export default class Skjema extends React.Component<SkjemaIProps, SkjemaStateI> {
 
     constructor(props: any) {
         super(props);
@@ -82,7 +82,13 @@ export default class Skjema extends React.Component<{}, SkjemaStateI> {
             },
             method: "POST",
             body: json
-        }).then(function (res) { console.log(res) })
-            .catch(function (res) { console.log(res) })
+        }).then(res => {
+            if (res.status >= 200 && res.status < 300) {
+                this.props.onSubmit(true);
+            } else {
+                console.log(`Feilmelding: ${res.statusText}`);
+                this.props.onSubmit(false);
+            }
+        });
     }
 }

@@ -29,7 +29,7 @@ export interface InputI {
     regexFlags?: string;
     feilmelding?: string;
     disableAutocomplete?: boolean;
-    settValid: any;
+    settValid: any; //Calback funksjon
     tittel?: string;
 }
 
@@ -37,4 +37,8 @@ export interface KategoriIProps {
     kategori: KategoriI;
     index: number;
     ossModus: boolean;
+}
+
+export interface SkjemaIProps {
+    onSubmit: any; //Calback funksjon
 }

@@ -11,6 +11,7 @@ using System;
 namespace KundeServiceOblig3.Controllers
 {
     [Produces("application/json")]
+    [Route("api/sporsmalogsvar")]
     public class SporsmalOgSvarController : Controller
     {
         private readonly DB db;
@@ -20,38 +21,6 @@ namespace KundeServiceOblig3.Controllers
             db = dbContext;
         }
 
-
-        [Route("api/kategoriermedsvar")]
-        [HttpGet]
-        public IActionResult GetKategorierMedSvar()
-        {
-            var kategoriListe = db.Kategorier
-                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Sporsmal)
-                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Svar)
-                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Svar.BesvartAvKundebehandler)
-                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Kunde).ToList();
-            foreach (var kategori in kategoriListe)
-            {
-                //Må sette navigasjons-propertyene til null for at JSON formateres korrekt
-                foreach (var sporsmalSvar in kategori.SporsmalOgSvar)
-                {
-                    sporsmalSvar.Kategori = null;
-                    if (sporsmalSvar.Svar != null)
-                    {
-                        sporsmalSvar.Svar.BesvartAv = sporsmalSvar.Svar.BesvartAvKundebehandler.Brukernavn;
-                        sporsmalSvar.Svar.BesvartAvKundebehandler = null;
-                    }
-                    if (sporsmalSvar.Kunde != null)
-                    {
-                        sporsmalSvar.Kunde.Sporsmal = null;
-                    }
-                }
-            }
-
-            return Ok(kategoriListe);
-        }
-
-        [Route("api/sporsmalogsvar")]
         [HttpPost]
         public IActionResult PostSporsmal([FromBody] SkjemaSporsmalView innSkjemaSporsmal)
         {
@@ -74,13 +43,33 @@ namespace KundeServiceOblig3.Controllers
                     Sporsmal = innSkjemaSporsmal.Sporsmal,
                     Stilt = DateTime.Now
                 },
-                Kunde = kunde
+                Kunde = kunde,
+                Kategori = new Kategori()
             };
 
+            db.Kategorier.Attach(skjemasporsmal.Kategori);
             db.SporsmalOgSvar.Add(skjemasporsmal);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500);
+            }
+            return CreatedAtAction("GetSporsmalMedSvar", new { id = skjemasporsmal.ID }, skjemasporsmal);
+        }
 
-            return CreatedAtAction("GetSkjemaSporsmal", new { id = skjemasporsmal.ID }, skjemasporsmal);
+        [HttpGet("{id}")]
+        public IActionResult GetSporsmalMedSvar([FromRoute] int id)
+        {
+            var sporsmalSvar = db.SporsmalOgSvar.SingleOrDefault(m => m.Sporsmal.ID == id);
+
+            if (sporsmalSvar != null)
+            {
+                return Ok(sporsmalSvar);
+            }
+            return NotFound();
         }
 
         private bool SporsmalCExists(int id)
