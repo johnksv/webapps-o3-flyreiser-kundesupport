@@ -28,14 +28,17 @@ namespace KundeServiceOblig3.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var kunde = new Kunde
+            var kunde = db.Kunder.Where(k => k.Epost == innSkjemaSporsmal.Epost).FirstOrDefault();
+            if (kunde == null)
             {
-                Fornavn = innSkjemaSporsmal.Fornavn,
-                Etternavn = innSkjemaSporsmal.Etternavn,
-                Epost = innSkjemaSporsmal.Epost,
-                Telefon = innSkjemaSporsmal.Telefon,
-            };
+                kunde = new Kunde
+                {
+                    Fornavn = innSkjemaSporsmal.Fornavn,
+                    Etternavn = innSkjemaSporsmal.Etternavn,
+                    Epost = innSkjemaSporsmal.Epost,
+                    Telefon = innSkjemaSporsmal.Telefon,
+                };
+            }
             var skjemasporsmal = new SporsmalOgSvar
             {
                 Sporsmal = new SporsmalC
