@@ -7,7 +7,8 @@ namespace DAL.DBModel
     public class Kategori
     {
         [Key]
-        public string Navn { get; set; } = "Annet";
+        [RegularExpression("^[A-Za-zæøåÆØÅ\\- ]+$")]
+        public string Navn { get; set; } = "Brukerspørsmål";
         public virtual List<SporsmalOgSvar> SporsmalOgSvar { get; set; }
     }
 }

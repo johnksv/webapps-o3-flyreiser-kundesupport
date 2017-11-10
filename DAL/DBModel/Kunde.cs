@@ -11,13 +11,13 @@ namespace DAL.DBModel
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int ID { get; set; }
-        [RegularExpression("")]
+        [RegularExpression("^[A-Za-zæøåÆØÅ\\- ]+$")]
         public string Fornavn { get; set; }
-        [RegularExpression("")]
+        [RegularExpression("^[A-Za-zæøåÆØÅ\\- ]+$")]
         public string Etternavn { get; set; }
-        [RegularExpression("")]
+        [RegularExpression("^[A-Za-zæøåÆØÅ0-9_\\-,\\.+ ]+@[a-zA-Z0-9]+\\.[a-zA-Z]+$")]
         public string Epost { get; set; }
-        [RegularExpression("")]
+        [RegularExpression("^[1-9][0-9]{7}$")]
         public string Telefon { get; set; }
 
         public virtual List<SporsmalOgSvar> Sporsmal { get; set; }

@@ -6,6 +6,8 @@ export interface SporsmalOgSvarIProps {
     sporsmalOgSvar: SporsmalOgSvarI;
     //Ofte stilte spørsmål-modus = Finere formatering
     ossModus: boolean;
+    //Callback når slette spørsmål
+    onDelete?: any;
 }
 
 export interface SporsmalIProps {

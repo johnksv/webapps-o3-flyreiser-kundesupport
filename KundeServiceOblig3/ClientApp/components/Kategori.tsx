@@ -1,7 +1,6 @@
 ﻿import * as React from "react";
 import { KategoriIProps } from "../interfaces/PropsInterface";
 import { KategoriI, SporsmalOgSvarI } from "../interfaces/ModelInterface";
-
 import SporsmalOgSvar from "./SporsmalOgSvar";
 
 export default class Kategori extends React.Component<KategoriIProps, {}> {
@@ -39,6 +38,6 @@ export default class Kategori extends React.Component<KategoriIProps, {}> {
     }
 
     private renderSporsmal(sporsmalOgSvar: SporsmalOgSvarI[]): any {
-        return sporsmalOgSvar.map(sporOgSvar => <SporsmalOgSvar key={sporOgSvar.id} sporsmalOgSvar={sporOgSvar} ossModus={true} />)
+        return sporsmalOgSvar.map(sporOgSvar => <SporsmalOgSvar key={sporOgSvar.id} sporsmalOgSvar={sporOgSvar} ossModus={this.props.ossModus} />)
     }
 }

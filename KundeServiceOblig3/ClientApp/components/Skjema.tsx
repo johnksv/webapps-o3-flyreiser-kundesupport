@@ -31,9 +31,9 @@ export default class Skjema extends React.Component<SkjemaIProps, SkjemaStateI> 
 
         return <form onSubmit={this.submitSkjema}>
 
-            <Input navn="Fornavn" feilmelding="Fornavn kan kun være bokstaver (A-Å)." regex="^[A-Za-zæøåÆØÅ\\- ]{2,}$" settValid={this.settValid} />
+            <Input navn="Fornavn" feilmelding="Fornavn kan kun være bokstaver (A-Å)." regex="^[A-Za-zæøåÆØÅ\\- ]+$" settValid={this.settValid} />
 
-            <Input navn="Etternavn" feilmelding="Etternavn kan kun være bokstaver (A-Å)." regex="^[A-Za-zæøåÆØÅ\\- ]{2,}$" settValid={this.settValid} />
+            <Input navn="Etternavn" feilmelding="Etternavn kan kun være bokstaver (A-Å)." regex="^[A-Za-zæøåÆØÅ\\- ]+$" settValid={this.settValid} />
 
             <Input navn="Epost" feilmelding="Ugyldig format på e-postadressen." regex="^[A-Za-zæøåÆØÅ0-9_\\-,\\.+ ]+@[a-zA-Z0-9]+\\.[a-zA-Z]+$" settValid={this.settValid} />
 

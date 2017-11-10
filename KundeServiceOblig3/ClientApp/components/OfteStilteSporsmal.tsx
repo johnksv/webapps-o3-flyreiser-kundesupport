@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
-import 'isomorphic-fetch';
-import { RouteComponentProps } from 'react-router';
+import "isomorphic-fetch";
+import { RouteComponentProps } from "react-router";
 import { KategoriI} from "../interfaces/ModelInterface";
 import Kategori from "./Kategori";
 
@@ -44,7 +44,7 @@ export default class OfteStilteSporsmal extends React.Component<RouteComponentPr
         </div>;
     }
     private hentAlleKategorierMedSvar(): void {
-        fetch("api/kategoriermedsvar/")
+        fetch("api/sporsmalogsvar/")
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     return response.json() as Promise<KategoriI[]>;

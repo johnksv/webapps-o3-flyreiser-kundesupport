@@ -23,44 +23,22 @@ namespace KundeServiceOblig3.Controllers
 
         // GET: api/Kategori
         [HttpGet]
-        public IActionResult GetKategorierMedSvar()
+        public IActionResult GetKategori()
         {
-            var kategoriListe = db.Kategorier
-                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Sporsmal)
-                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Svar)
-                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Svar.BesvartAvKundebehandler)
-                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Kunde).ToList();
-            foreach (var kategori in kategoriListe)
-            {
-                //Må sette navigasjons-propertyene til null for at JSON formateres korrekt
-                foreach (var sporsmalSvar in kategori.SporsmalOgSvar)
-                {
-                    sporsmalSvar.Kategori = null;
-                    if (sporsmalSvar.Svar != null)
-                    {
-                        sporsmalSvar.Svar.BesvartAv = sporsmalSvar.Svar.BesvartAvKundebehandler.Brukernavn;
-                        sporsmalSvar.Svar.BesvartAvKundebehandler = null;
-                    }
-                    if (sporsmalSvar.Kunde != null)
-                    {
-                        sporsmalSvar.Kunde.Sporsmal = null;
-                    }
-                }
-            }
-
+            var kategoriListe = db.Kategorier.ToList();
             return Ok(kategoriListe);
         }
 
         // GET: api/Kategori/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetKategori([FromRoute] string id)
+        public  IActionResult GetKategori([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var kategori = await db.Kategorier.SingleOrDefaultAsync(m => m.Navn == id);
+            var kategori = db.Kategorier.SingleOrDefaultAsync(m => m.Navn == id);
 
             if (kategori == null)
             {

@@ -21,6 +21,76 @@ namespace KundeServiceOblig3.Controllers
             db = dbContext;
         }
 
+        /// <summary>
+        ///   JSON-objektet vil se slik ut:
+        ///[  
+        ///  {  
+        ///     "navn":"Generelt",
+        ///     "sporsmalOgSvar":[  
+        ///        {  
+        ///           "id":2,
+        ///           "sporsmal":{  
+        ///              "id":1,
+        ///              "sporsmal":"Hvordan kan jeg avbestille min reise?",
+        ///              "stilt":"2017-10-22T13:15:47.7968554"
+        ///           },
+        ///           "svar":{  
+        ///              "id":1,
+        ///              "svar":"Du kan avbestille reisen din frem til det har gått 48 timer samt gitt at din flygning ikke har hatt avgang.",
+        ///              "besvartAvKundebehandler":null,
+        ///              "besvart":"2017-11-01T13:15:47.791514",
+        ///              "besvartAv":"Ola"
+        ///           },
+        ///           "kategori":null,
+        ///           "publisert":true,
+        ///           "kunde":null
+        ///        }
+        ///     ]
+        ///  }
+        ///]
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult GetSporsmal()
+        {
+            var kategoriListe = db.Kategorier
+                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Sporsmal)
+                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Svar)
+                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Svar.BesvartAvKundebehandler)
+                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Kunde).ToList();
+            foreach (var kategori in kategoriListe)
+            {
+                //Må sette navigasjons-propertyene til null for at JSON formateres korrekt
+                foreach (var sporsmalSvar in kategori.SporsmalOgSvar)
+                {
+                    sporsmalSvar.Kategori = null;
+                    if (sporsmalSvar.Svar != null)
+                    {
+                        sporsmalSvar.Svar.BesvartAv = sporsmalSvar.Svar.BesvartAvKundebehandler.Brukernavn;
+                        sporsmalSvar.Svar.BesvartAvKundebehandler = null;
+                    }
+                    if (sporsmalSvar.Kunde != null)
+                    {
+                        sporsmalSvar.Kunde.Sporsmal = null;
+                    }
+                }
+            }
+
+            return Ok(kategoriListe);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetSporsmalMedSvar([FromRoute] int id)
+        {
+            var sporsmalSvar = db.SporsmalOgSvar.SingleOrDefault(m => m.Sporsmal.ID == id);
+
+            if (sporsmalSvar != null)
+            {
+                return Ok(sporsmalSvar);
+            }
+            return NotFound();
+        }
+
         [HttpPost]
         public IActionResult PostSporsmal([FromBody] SkjemaSporsmalView innSkjemaSporsmal)
         {
@@ -38,7 +108,22 @@ namespace KundeServiceOblig3.Controllers
                     Epost = innSkjemaSporsmal.Epost,
                     Telefon = innSkjemaSporsmal.Telefon,
                 };
+            }else
+            {
+                db.Kunder.Attach(kunde);
             }
+
+            //Brukerspørsmål skal egentlig bli laget i DBseed, men legger inn denne som backup i tilfelelt man ikke kjører dbSeed
+            var kategori = db.Kategorier.Where(k => k.Navn == "Brukerspørsmål").FirstOrDefault();
+            if(kategori == null)
+            {
+                kategori = new Kategori();
+            }
+            else
+            {
+                db.Kategorier.Attach(kategori);
+            }
+
             var skjemasporsmal = new SporsmalOgSvar
             {
                 Sporsmal = new SporsmalC
@@ -47,10 +132,9 @@ namespace KundeServiceOblig3.Controllers
                     Stilt = DateTime.Now
                 },
                 Kunde = kunde,
-                Kategori = new Kategori()
+                Kategori = kategori
             };
 
-            db.Kategorier.Attach(skjemasporsmal.Kategori);
             db.SporsmalOgSvar.Add(skjemasporsmal);
             try
             {
@@ -63,21 +147,21 @@ namespace KundeServiceOblig3.Controllers
             return CreatedAtAction("GetSporsmalMedSvar", new { id = skjemasporsmal.ID }, skjemasporsmal);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetSporsmalMedSvar([FromRoute] int id)
+        [HttpPut]
+        public ActionResult OppdaterSporsmal([FromBody] SporsmalOgSvarViewModel sporsmalOgSvar)
         {
-            var sporsmalSvar = db.SporsmalOgSvar.SingleOrDefault(m => m.Sporsmal.ID == id);
+            var sos = db.SporsmalOgSvar.FirstOrDefault(s => s.ID == sporsmalOgSvar.Id);
 
-            if (sporsmalSvar != null)
-            {
-                return Ok(sporsmalSvar);
-            }
-            return NotFound();
-        }
+            if (sos == null) return NotFound(sporsmalOgSvar.Id);
 
-        private bool SporsmalCExists(int id)
-        {
-            return db.Sporsmal.Any(e => e.ID == id);
+            sos.Publisert = sporsmalOgSvar.Publisert;
+            sos.Svar = sporsmalOgSvar.Svar;
+
+
+            db.SaveChanges();
+            return NoContent();
+
         }
+        
     }
 }

@@ -7,10 +7,12 @@
 export interface SporsmalOgSvarI {
     id: number;
     sporsmal: SporsmalI;
-    svar?: SvarI;
+    svar: SvarI | undefined;
     publisert: boolean;
-    kategori?: string;
-    kunde?: KundeI;
+    kategori: string;
+    kunde: KundeI | undefined;
+    //Udefinert om ikke oppdatert
+    requestTilbakemelding: string | undefined;
 }
 
 interface KundeI {
