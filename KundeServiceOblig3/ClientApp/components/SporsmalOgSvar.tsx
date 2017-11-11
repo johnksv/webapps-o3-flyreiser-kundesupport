@@ -99,6 +99,7 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
     }
 
     private slettSporsmal() {
+        if (! confirm("Denne handlingen vil fjerne spørsmålet.")) return;
         fetch(`api/SporsmalOgSvar/${this.state.id}`, {
             headers: {
                 'Accept': 'application/json',
