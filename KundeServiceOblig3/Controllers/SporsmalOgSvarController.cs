@@ -162,6 +162,17 @@ namespace KundeServiceOblig3.Controllers
             return NoContent();
 
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult SlettSporsmalOgSvar([FromRoute] int id)
+        {
+            var sos = db.SporsmalOgSvar.FirstOrDefault(s => s.ID == id);
+            if (sos == null) return NotFound(id);
+
+            db.SporsmalOgSvar.Remove(sos);
+            db.SaveChanges();
+            return Ok();
+        }
         
     }
 }

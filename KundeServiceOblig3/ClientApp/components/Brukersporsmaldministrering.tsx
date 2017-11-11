@@ -32,10 +32,7 @@ export default class Brukersporsmaladministrering extends React.Component<RouteC
                 <Kategori kategori={kategori} index={i} ossModus={false} key={i} />
             )}
         </div>
-
-
     }
-
 
     private hentAlleBrukerSporsmal() {
         fetch("api/sporsmalogsvar/")

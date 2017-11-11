@@ -99,18 +99,12 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
     }
 
     private slettSporsmal() {
-        const skjemadata = {
-            id: this.state.id,
-        };
-
-        const skjemadataJson = JSON.stringify(skjemadata);
-        fetch("api/SporsmalOgSvar/", {
+        fetch(`api/SporsmalOgSvar/${this.state.id}`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            method: "DELETE",
-            body: skjemadataJson
+            method: "DELETE"
         }).then(res => {
             if (res.status == 200 || res.status == 204) {
                 this.props.onDelete(this.state.id);
