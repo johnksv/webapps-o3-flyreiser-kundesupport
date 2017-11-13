@@ -56,7 +56,6 @@ namespace KundeServiceOblig3.Controllers
             var kategoriListe = db.Kategorier
                 .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Sporsmal)
                 .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Svar)
-                .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Svar.BesvartAvKundebehandler)
                 .Include(kat => kat.SporsmalOgSvar).ThenInclude(s => s.Kunde).ToList();
             foreach (var kategori in kategoriListe)
             {
@@ -64,11 +63,6 @@ namespace KundeServiceOblig3.Controllers
                 foreach (var sporsmalSvar in kategori.SporsmalOgSvar)
                 {
                     sporsmalSvar.Kategori = null;
-                    if (sporsmalSvar.Svar != null)
-                    {
-                        sporsmalSvar.Svar.BesvartAv = sporsmalSvar.Svar.BesvartAvKundebehandler.Brukernavn;
-                        sporsmalSvar.Svar.BesvartAvKundebehandler = null;
-                    }
                     if (sporsmalSvar.Kunde != null)
                     {
                         sporsmalSvar.Kunde.Sporsmal = null;
@@ -157,26 +151,19 @@ namespace KundeServiceOblig3.Controllers
 
             if (sporsmalOgSvar == null) return StatusCode(500);
 
-            var sos = db.SporsmalOgSvar.Include(s => s.Svar).ThenInclude(sv => sv.BesvartAvKundebehandler).FirstOrDefault(s => s.ID == sporsmalOgSvar.Id);
+            var sos = db.SporsmalOgSvar.Include(s => s.Svar).FirstOrDefault(s => s.ID == sporsmalOgSvar.Id);
 
             if (sos == null) return NotFound(sporsmalOgSvar.Id);
 
             sos.Publisert = sporsmalOgSvar.Publisert;
-            if (sos.Svar == null)
-            {
-                sos.Svar = new SvarC();
-            }
             if (sporsmalOgSvar.Svar != null)
             {
+                if (sos.Svar == null)
+                {
+                    sos.Svar = new SvarC();
+                }
                 sos.Svar.Svar = sporsmalOgSvar.Svar.Svar;
                 sos.Svar.Besvart = sporsmalOgSvar.Svar.Besvart;
-            }
-
-
-            var kundeBehandler = db.Kundebehandlere.FirstOrDefault(s => s.Brukernavn == sos.Svar.BesvartAv);
-            if (kundeBehandler != null)
-            {
-                sos.Svar.BesvartAvKundebehandler = kundeBehandler;
             }
 
             db.SaveChanges();

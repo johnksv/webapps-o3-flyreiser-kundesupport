@@ -16,54 +16,49 @@ namespace DAL
             {
                 return;
             }
-            var kundebehandler = new Kundebehandler
-            {
-                Brukernavn = "Ola",
-                Passord = new byte[] { 157, 139, 122, 179, 32, 60, 242, 212, 90, 206, 9, 36, 228, 133, 132, 142, 26, 193, 225, 49, 252, 98, 154, 102, 87, 73, 148, 252, 232, 222, 104, 39 }, //Test1
-                Salt = "SALT"
-            };
+
             var svarA = new SvarC
             {
                 Svar = "Du kan avbestille reisen din frem til det har gått 48 timer samt gitt at din flygning ikke har hatt avgang.",
                 Besvart = DateTime.Now.AddDays(-7),
-                BesvartAvKundebehandler = kundebehandler
+                BesvartAv = "Ola"
             };
             var svarB = new SvarC
             {
                 Svar = "Bagasje er gratis hos oss",
                 Besvart = DateTime.Now.AddDays(-10),
-                BesvartAvKundebehandler = kundebehandler
+                BesvartAv = "Ola"
             };
 
             var svarC = new SvarC
             {
                 Svar = "Ja! Gavekort selges i alle butikker i hele Norge, med unntak av de butikkene der det ikke selges.",
                 Besvart = DateTime.Now.AddDays(-10),
-                BesvartAvKundebehandler = kundebehandler
+                BesvartAv = "Ola"
             };
             var svarD = new SvarC
             {
                 Svar = "Kostnaden for bagasje bestemmes av destinasjon.",
                 Besvart = DateTime.Now,
-                BesvartAvKundebehandler = kundebehandler
+                BesvartAv = "Ola"
             };
             var svarE = new SvarC
             {
                 Svar = "Ekstra bagasje kan bestilles ved å kontakte oss med kontaksskjemaet.",
                 Besvart = DateTime.Now,
-                BesvartAvKundebehandler = kundebehandler
+                BesvartAv = "Ola"
             };
             var svarF = new SvarC
             {
                 Svar = "Du kan medbringe musikkinstrument hvis ønskelig. Det fraktes i henhold til spesielle betingelser, vennligst les mer her.",
                 Besvart = DateTime.Now,
-                BesvartAvKundebehandler = kundebehandler
+                BesvartAv = "Ola"
             };
             var svarG = new SvarC
             {
                 Svar = "Spedbarn (under 2 år) uten eget flysete kan ha med seg inntil fem kilo innsjekket bagasje uten ekstra kostnad (enten i foreldrenes innsjekkede bagasje eller i en separat bag). Vanlig regler for innsjekket bagasje gjelder for barn/spedbarn med eget sete.",
                 Besvart = DateTime.Now,
-                BesvartAvKundebehandler = kundebehandler
+                BesvartAv = "Ola"
             };
 
             var sporsmalA = new SporsmalC
@@ -174,8 +169,6 @@ namespace DAL
                 Kategori = new Kategori()
             };
 
-
-            dbContext.Kundebehandlere.Add(kundebehandler);
             dbContext.SporsmalOgSvar.Add(sporsmalSvarA);
             dbContext.SporsmalOgSvar.Add(sporsmalSvarC);
             dbContext.SporsmalOgSvar.Add(sporsmalSvarB);
