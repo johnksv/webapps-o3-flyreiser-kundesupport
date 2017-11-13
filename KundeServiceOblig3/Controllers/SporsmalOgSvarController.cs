@@ -141,7 +141,7 @@ namespace KundeServiceOblig3.Controllers
             {
                 db.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(500);
             }
@@ -151,6 +151,7 @@ namespace KundeServiceOblig3.Controllers
         [HttpPut]
         public ActionResult OppdaterSporsmal([FromBody] Object data)
         {
+            //Måtte gjøre det på denne måten siden den ikke ville mappes ellers....
             var jsonString = data.ToString();
             var sporsmalOgSvar = Newtonsoft.Json.JsonConvert.DeserializeObject<SporsmalOgSvarViewModel>(jsonString);
 
@@ -165,9 +166,11 @@ namespace KundeServiceOblig3.Controllers
             {
                 sos.Svar = new SvarC();
             }
-
-            sos.Svar.Svar = sporsmalOgSvar.Svar.Svar;
-            sos.Svar.Besvart = sporsmalOgSvar.Svar.Besvart;
+            if (sporsmalOgSvar.Svar != null)
+            {
+                sos.Svar.Svar = sporsmalOgSvar.Svar.Svar;
+                sos.Svar.Besvart = sporsmalOgSvar.Svar.Besvart;
+            }
 
 
             var kundeBehandler = db.Kundebehandlere.FirstOrDefault(s => s.Brukernavn == sos.Svar.BesvartAv);

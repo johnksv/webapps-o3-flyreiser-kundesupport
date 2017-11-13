@@ -37,8 +37,32 @@ namespace DAL
 
             var svarC = new SvarC
             {
-                Svar = "Bagasje er gratis hos oss",
+                Svar = "Ja! Gavekort selges i alle butikker i hele Norge, med unntak av de butikkene der det ikke selges.",
                 Besvart = DateTime.Now.AddDays(-10),
+                BesvartAvKundebehandler = kundebehandler
+            };
+            var svarD = new SvarC
+            {
+                Svar = "Kostnaden for bagasje bestemmes av destinasjon.",
+                Besvart = DateTime.Now,
+                BesvartAvKundebehandler = kundebehandler
+            };
+            var svarE = new SvarC
+            {
+                Svar = "Ekstra bagasje kan bestilles ved å kontakte oss med kontaksskjemaet.",
+                Besvart = DateTime.Now,
+                BesvartAvKundebehandler = kundebehandler
+            };
+            var svarF = new SvarC
+            {
+                Svar = "Du kan medbringe musikkinstrument hvis ønskelig. Det fraktes i henhold til spesielle betingelser, vennligst les mer her.",
+                Besvart = DateTime.Now,
+                BesvartAvKundebehandler = kundebehandler
+            };
+            var svarG = new SvarC
+            {
+                Svar = "Spedbarn (under 2 år) uten eget flysete kan ha med seg inntil fem kilo innsjekket bagasje uten ekstra kostnad (enten i foreldrenes innsjekkede bagasje eller i en separat bag). Vanlig regler for innsjekket bagasje gjelder for barn/spedbarn med eget sete.",
+                Besvart = DateTime.Now,
                 BesvartAvKundebehandler = kundebehandler
             };
 
@@ -60,12 +84,37 @@ namespace DAL
             };
             var sporsmalD = new SporsmalC
             {
+                Sporsmal = "Hvor mye koster ekstra bagasje?",
+                Stilt = DateTime.Now
+            };
+            var sporsmalE = new SporsmalC
+            {
+                Sporsmal = "Hvordan kan jeg bestille ekstra bagasje?",
+                Stilt = DateTime.Now
+            };
+            var sporsmalF = new SporsmalC
+            {
+                Sporsmal = "Hvordan reiser jeg med musikkinstrument?",
+                Stilt = DateTime.Now
+            };
+            var sporsmalG = new SporsmalC
+            {
+                Sporsmal = "Hvor mye bagasje kan jeg ta med for et barn?",
+                Stilt = DateTime.Now
+            };
+            //Brukersporsmal
+            var sporsmalH = new SporsmalC
+            {
                 Sporsmal = "Dere flyr ikke dit jeg vil. Når vil det komme reiser til Asia?",
                 Stilt = DateTime.Now
             };
             var generelt = new Kategori
             {
                 Navn = "Generelt"
+            };
+            var bagasje = new Kategori
+            {
+                Navn = "Bagasje"
             };
 
             var sporsmalSvarA = new SporsmalOgSvar
@@ -86,6 +135,31 @@ namespace DAL
                 Svar = svarC,
                 Kategori = generelt
             };
+            var sporsmalSvarD = new SporsmalOgSvar
+            {
+                Sporsmal = sporsmalD,
+                Svar = svarD,
+                Kategori = bagasje
+            };
+            var sporsmalSvarE = new SporsmalOgSvar
+            {
+                Sporsmal = sporsmalE,
+                Svar = svarE,
+                Kategori = bagasje
+            };
+            var sporsmalSvarF = new SporsmalOgSvar
+            {
+                Sporsmal = sporsmalF,
+                Svar = svarF,
+                Kategori = bagasje
+            };
+            var sporsmalSvarG = new SporsmalOgSvar
+            {
+                Sporsmal = sporsmalG,
+                Svar = svarG,
+                Kategori = bagasje
+            };
+
             var kunde = new Kunde
             {
                 Epost = "test@email.com",
@@ -93,9 +167,9 @@ namespace DAL
                 Etternavn = "Nordmann",
                 Telefon = "12345678",
             };
-            var sporsmalSvarD = new SporsmalOgSvar
+            var sporsmalSvarH = new SporsmalOgSvar
             {
-                Sporsmal = sporsmalD,
+                Sporsmal = sporsmalH,
                 Kunde = kunde,
                 Kategori = new Kategori()
             };
@@ -106,16 +180,12 @@ namespace DAL
             dbContext.SporsmalOgSvar.Add(sporsmalSvarC);
             dbContext.SporsmalOgSvar.Add(sporsmalSvarB);
             dbContext.SporsmalOgSvar.Add(sporsmalSvarD);
+            dbContext.SporsmalOgSvar.Add(sporsmalSvarE);
+            dbContext.SporsmalOgSvar.Add(sporsmalSvarF);
+            dbContext.SporsmalOgSvar.Add(sporsmalSvarG);
+            dbContext.SporsmalOgSvar.Add(sporsmalSvarH);
 
-            try
-            {
-
-                dbContext.SaveChanges();
-            }
-            catch (Exception e)
-            {
-
-            }
+            dbContext.SaveChanges();
         }
 
     }
