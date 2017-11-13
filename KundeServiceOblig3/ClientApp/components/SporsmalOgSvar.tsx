@@ -47,8 +47,6 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
             </div>;
         }
 
-
-
         return <div className="panel-group">
             <div className="panel panel-default">
                 <div className="panel-heading">
@@ -90,14 +88,21 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
         }).then(res => {
             if (res.status == 200 || res.status == 204) {
                 this.setState({
-                    requestTilbakemelding: "Oppdatering OK"
+                    requestTilbakemelding: "Oppdatering OK."
                 });
             } else {
                 console.log(`Feilmelding: ${res.statusText}`);
                 this.setState({
-                    requestTilbakemelding: "Oppdatering feilet. Prøv igjen senere"
+                    requestTilbakemelding: "Oppdatering feilet. Prøv igjen senere."
                 });
             }
+
+            var interval = setInterval( () => {
+                clearInterval(interval);
+                this.setState({
+                    requestTilbakemelding: undefined
+                });   
+            }, 2000);
         });
     }
 
@@ -132,5 +137,4 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
             svar: nyttSvar
         });
     }
-
 }
