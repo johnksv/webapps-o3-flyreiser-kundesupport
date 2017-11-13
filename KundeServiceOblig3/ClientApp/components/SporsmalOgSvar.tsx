@@ -42,7 +42,7 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
                     </label>
                 </div>
                 <button className="btn btn-primary" onClick={this.lagreEndringer}>Lagre enringer</button>
-                <button className="btn btn-danger" onClick={this.slettSporsmal}>Slett</button>
+                <button className="btn btn-danger marginVenstre" onClick={this.slettSporsmal}>Slett</button>
                 {oppdatering}
             </div>;
         }

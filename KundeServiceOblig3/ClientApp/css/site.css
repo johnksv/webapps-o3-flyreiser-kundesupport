@@ -68,3 +68,7 @@
         text-overflow: ellipsis;
     }
 }
+
+.marginVenstre{
+    margin-left: 0.5em;
+}

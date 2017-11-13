@@ -37,6 +37,7 @@ export default class OfteStilteSporsmal extends React.Component<RouteComponentPr
         return <div className="sporsmalContainer">
             <h1>Ofte stilte spørsmål</h1>
             <p>Spørsmålene er delt inn i kategorier slik at du enkelt kan finne frem til hva du lurer på.</p>
+            <p>Trykk på kategorien for å utvide eller kollapse kategorien.</p>
             {lastemelding}
             {this.state.kategorier.map((kategori, i) =>
                 <Kategori kategori={kategori} index={i} ossModus={true} key={i}/>
