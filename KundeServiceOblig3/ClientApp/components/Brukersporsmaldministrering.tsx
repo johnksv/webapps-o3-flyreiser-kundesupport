@@ -51,6 +51,12 @@ export default class Brukersporsmaladministrering extends React.Component<RouteC
                 }
             })
             .then(json => {
+                json.sort((s1, s2) => {
+                    if (s1.navn.toLowerCase() == "generelt") return -1;
+                    if (s2.navn.toLowerCase() == "generelt") return 1;
+                    return 0;
+                });
+
                 this.setState({
                     kategorier: json,
                     laster: false

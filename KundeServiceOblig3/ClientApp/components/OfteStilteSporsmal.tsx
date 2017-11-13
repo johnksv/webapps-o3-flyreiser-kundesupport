@@ -39,7 +39,7 @@ export default class OfteStilteSporsmal extends React.Component<RouteComponentPr
             <p>Spørsmålene er delt inn i kategorier slik at du enkelt kan finne frem til hva du lurer på.</p>
             {lastemelding}
             {this.state.kategorier.map((kategori, i) =>
-                <Kategori kategori={kategori} index={i} ossModus={true} key={i} />
+                <Kategori kategori={kategori} index={i} ossModus={true} key={i}/>
             )}
         </div>;
     }
@@ -53,6 +53,12 @@ export default class OfteStilteSporsmal extends React.Component<RouteComponentPr
                 }
             })
             .then(json => {
+                json.sort((s1, s2) => {
+                    if (s1.navn.toLowerCase() == "generelt") return -1;
+                    if (s2.navn.toLowerCase() == "generelt") return 1;
+                    return 0;
+                });
+
                 this.setState({
                     kategorier: json,
                     laster: false
