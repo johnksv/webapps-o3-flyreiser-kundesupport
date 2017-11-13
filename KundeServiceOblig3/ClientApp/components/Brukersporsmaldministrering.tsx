@@ -4,12 +4,12 @@ import { RouteComponentProps } from "react-router";
 import { KategoriI } from "../interfaces/ModelInterface";
 import Kategori from "./Kategori";
 
-interface StateInterface {
+interface BrukersporsmalI {
     kategorier: KategoriI[];
     laster: boolean;
 }
 
-export default class Brukersporsmaladministrering extends React.Component<RouteComponentProps<{}>, StateInterface>{
+export default class Brukersporsmaladministrering extends React.Component<RouteComponentProps<{}>, BrukersporsmalI>{
 
     constructor(props: any) {
         super(props);
@@ -27,9 +27,16 @@ export default class Brukersporsmaladministrering extends React.Component<RouteC
     }
 
     public render() {
+        let lastemelding;
+        if (this.state.laster) {
+            lastemelding = <p>Laster</p>;
+        }
         return <div> 
+            <h1>Spørsmåladministrering</h1>
+            <p>Her kan du administrere spørsmål som allerede ligger inne i databasen. Ubesvarte brukerspørsmål kan besvares.</p>
+            {lastemelding}
             {this.state.kategorier.map((kategori, i) =>
-                <Kategori kategori={kategori} index={i} ossModus={false} key={i} />
+                <Kategori kategori={kategori} index={i} ossModus={false} key={i} redigeringsModus={true} />
             )}
         </div>
     }

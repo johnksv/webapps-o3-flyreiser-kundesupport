@@ -3,7 +3,7 @@ import "isomorphic-fetch";
 import { SporsmalOgSvarIProps } from "../interfaces/PropsInterface";
 import Sporsmal from "./Sporsmal";
 import Svar from "./Svar";
-import { SporsmalOgSvarI, SporsmalI } from "ClientApp/interfaces/ModelInterface";
+import { SporsmalOgSvarI, SporsmalI, SvarI } from "ClientApp/interfaces/ModelInterface";
 
 export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps, SporsmalOgSvarI> {
 
@@ -21,6 +21,7 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
         };
 
         this.endrePublisert = this.endrePublisert.bind(this);
+        this.onEndreSvar = this.onEndreSvar.bind(this);
         this.lagreEndringer = this.lagreEndringer.bind(this);
         this.slettSporsmal = this.slettSporsmal.bind(this);
     }
@@ -46,13 +47,15 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
             </div>;
         }
 
+
+
         return <div className="panel-group">
             <div className="panel panel-default">
                 <div className="panel-heading">
                     <Sporsmal sporsmal={this.state.sporsmal} ossModus={this.props.ossModus} />
                 </div>
                 <div className="panel-body">
-                    <Svar svar={this.state.svar} ossModus={this.props.ossModus} />
+                    <Svar svar={this.state.svar} ossModus={this.props.ossModus} svarEndres={this.onEndreSvar} redigeringsModus={this.props.redigeringsModus} />
                 </div>
                 {redigeringModus}
             </div>
@@ -99,7 +102,7 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
     }
 
     private slettSporsmal() {
-        if (! confirm("Denne handlingen vil fjerne spørsmålet.")) return;
+        if (!confirm("Denne handlingen vil fjerne spørsmålet.")) return;
         fetch(`api/SporsmalOgSvar/${this.state.id}`, {
             headers: {
                 'Accept': 'application/json',
@@ -115,6 +118,18 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
                     requestTilbakemelding: "En feil oppsto. Kunne ikke slette."
                 });
             }
+        });
+    }
+
+    private onEndreSvar(innhold: string) {
+        const nyttSvar = {
+            svar: innhold,
+            besvart: (new Date()).toJSON(),
+            besvartAv: "Ola"
+        } as SvarI;
+
+        this.setState({
+            svar: nyttSvar
         });
     }
 

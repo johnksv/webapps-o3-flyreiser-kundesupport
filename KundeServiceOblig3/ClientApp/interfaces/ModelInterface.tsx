@@ -2,7 +2,6 @@
     navn: string;
     sporsmalOgSvar: SporsmalOgSvarI[];
     laster: boolean;
-
 }
 
 

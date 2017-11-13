@@ -8,6 +8,7 @@ export interface SporsmalOgSvarIProps {
     ossModus: boolean;
     //Callback når slette spørsmål
     onDelete?: any;
+    redigeringsModus?: boolean;
 }
 
 export interface SporsmalIProps {
@@ -18,6 +19,9 @@ export interface SporsmalIProps {
 export interface SvarIProps {
     svar?: SvarI;
     ossModus: boolean;
+    sporsmalID?: number;
+    svarEndres?: any;
+    redigeringsModus?: boolean;
 }
 
 export interface SkjemaSporsmalIProps {
@@ -39,6 +43,7 @@ export interface KategoriIProps {
     kategori: KategoriI;
     index: number;
     ossModus: boolean;
+    redigeringsModus?: boolean;
 }
 
 export interface SkjemaIProps {

@@ -9,12 +9,9 @@ namespace KundeServiceOblig3.Models
 {
     public class SporsmalOgSvarViewModel
     {
-        [Required]
         public int Id { get; set; }
-        [Required]
         public SporsmalC Sporsmal { get; set; }
         public SvarC Svar { get; set; }
-        [Required]
         public bool Publisert { get; set; }
         public Kategori Kategori { get; set; }
         public Kunde Kunde { get; set; }

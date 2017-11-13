@@ -108,14 +108,15 @@ namespace KundeServiceOblig3.Controllers
                     Epost = innSkjemaSporsmal.Epost,
                     Telefon = innSkjemaSporsmal.Telefon,
                 };
-            }else
+            }
+            else
             {
                 db.Kunder.Attach(kunde);
             }
 
             //Brukerspørsmål skal egentlig bli laget i DBseed, men legger inn denne som backup i tilfelelt man ikke kjører dbSeed
             var kategori = db.Kategorier.Where(k => k.Navn == "Brukerspørsmål").FirstOrDefault();
-            if(kategori == null)
+            if (kategori == null)
             {
                 kategori = new Kategori();
             }
@@ -148,19 +149,35 @@ namespace KundeServiceOblig3.Controllers
         }
 
         [HttpPut]
-        public ActionResult OppdaterSporsmal([FromBody] SporsmalOgSvarViewModel sporsmalOgSvar)
+        public ActionResult OppdaterSporsmal([FromBody] Object data)
         {
-            var sos = db.SporsmalOgSvar.FirstOrDefault(s => s.ID == sporsmalOgSvar.Id);
+            var jsonString = data.ToString();
+            var sporsmalOgSvar = Newtonsoft.Json.JsonConvert.DeserializeObject<SporsmalOgSvarViewModel>(jsonString);
+
+            if (sporsmalOgSvar == null) return StatusCode(500);
+
+            var sos = db.SporsmalOgSvar.Include(s => s.Svar).ThenInclude(sv => sv.BesvartAvKundebehandler).FirstOrDefault(s => s.ID == sporsmalOgSvar.Id);
 
             if (sos == null) return NotFound(sporsmalOgSvar.Id);
 
             sos.Publisert = sporsmalOgSvar.Publisert;
-            sos.Svar = sporsmalOgSvar.Svar;
+            if (sos.Svar == null)
+            {
+                sos.Svar = new SvarC();
+            }
 
+            sos.Svar.Svar = sporsmalOgSvar.Svar.Svar;
+            sos.Svar.Besvart = sporsmalOgSvar.Svar.Besvart;
+
+
+            var kundeBehandler = db.Kundebehandlere.FirstOrDefault(s => s.Brukernavn == sos.Svar.BesvartAv);
+            if (kundeBehandler != null)
+            {
+                sos.Svar.BesvartAvKundebehandler = kundeBehandler;
+            }
 
             db.SaveChanges();
             return NoContent();
-
         }
 
         [HttpDelete("{id}")]
@@ -173,6 +190,6 @@ namespace KundeServiceOblig3.Controllers
             db.SaveChanges();
             return Ok();
         }
-        
+
     }
 }

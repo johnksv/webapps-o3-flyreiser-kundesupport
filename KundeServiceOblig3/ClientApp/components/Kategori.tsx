@@ -7,9 +7,15 @@ export default class Kategori extends React.Component<KategoriIProps, KategoriI>
 
     constructor(props: any) {
         super(props);
+
+        let sos = this.props.kategori.sporsmalOgSvar;
+        if (this.props.ossModus) {
+            sos = this.props.kategori.sporsmalOgSvar.filter(s => s.publisert);
+        }
+
         this.state = {
             navn: this.props.kategori.navn,
-            sporsmalOgSvar: this.props.kategori.sporsmalOgSvar,
+            sporsmalOgSvar: sos,
             laster: true
         };
 
@@ -42,7 +48,7 @@ export default class Kategori extends React.Component<KategoriIProps, KategoriI>
     }
 
     private renderSporsmal(sporsmalOgSvar: SporsmalOgSvarI[]): any {
-        return sporsmalOgSvar.map(sporOgSvar => <SporsmalOgSvar key={sporOgSvar.id} sporsmalOgSvar={sporOgSvar} ossModus={this.props.ossModus} onDelete={this.onDeleteSporsmal} />)
+        return sporsmalOgSvar.map(sporOgSvar => <SporsmalOgSvar key={sporOgSvar.id} sporsmalOgSvar={sporOgSvar} ossModus={this.props.ossModus} onDelete={this.onDeleteSporsmal} redigeringsModus={this.props.redigeringsModus} />)
     }
 
 
