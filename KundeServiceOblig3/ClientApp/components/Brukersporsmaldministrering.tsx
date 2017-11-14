@@ -30,8 +30,12 @@ export default class Brukersporsmaladministrering extends React.Component<RouteC
         let lastemelding;
         if (this.state.laster) {
             lastemelding = <p>Laster</p>;
+        } else if (this.state.kategorier.length == 0) {
+            //Antar at det alltid skal finnes minst 1 spørsmål i databasen
+            lastemelding = <p className="text-danger">En feil oppsto under henting av spørsmål. Vennligst prøv igjen senere. (Se konsollen for feilmelding)</p>;
         }
-        return <div> 
+
+        return <div>
             <h1>Spørsmåladministrering</h1>
             <p>Her kan du administrere spørsmål som allerede ligger inne i databasen. Ubesvarte brukerspørsmål kan besvares.</p>
             {lastemelding}

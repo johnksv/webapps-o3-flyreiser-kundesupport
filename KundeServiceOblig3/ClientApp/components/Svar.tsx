@@ -22,7 +22,7 @@ export default class Svar extends React.Component<SvarIProps, { svar: string }> 
     public render() {
         if (this.props.redigeringsModus) {
             return <div className="svar">
-                <textarea rows={3} cols={50} onChange={this.onEndreSvar} value={this.state.svar}></textarea>
+                <textarea rows={3} cols={75} onChange={this.onEndreSvar} value={this.state.svar}></textarea>
             </div>;
         }
 
