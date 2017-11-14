@@ -48,4 +48,5 @@ export interface SkjemaSporsmalI {
 export interface SkjemaStateI {
     validForm: boolean;
     [valid: string]: boolean | string;
+    senderInn: boolean;
 }

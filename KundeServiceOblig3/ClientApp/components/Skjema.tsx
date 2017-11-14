@@ -9,7 +9,8 @@ export default class Skjema extends React.Component<SkjemaIProps, SkjemaStateI> 
     constructor(props: any) {
         super(props);
         this.state = {
-            validForm: true
+            validForm: true,
+            senderInn: false
         };
 
         this.submitSkjema = this.submitSkjema.bind(this);
@@ -45,6 +46,7 @@ export default class Skjema extends React.Component<SkjemaIProps, SkjemaStateI> 
 
             <br />
             <button type="submit" className="btn btn-primary">Send inn</button>
+            {this.state.senderInn && <p>Sender inn. Vent..</p>}
 
         </form>;
     }
@@ -64,7 +66,10 @@ export default class Skjema extends React.Component<SkjemaIProps, SkjemaStateI> 
             this.setState({ validForm: false });
             return;
         }
-        this.setState({ validForm: true });
+        this.setState({
+            validForm: true,
+            senderInn: true
+        });
 
         const skjemadata = {
             Fornavn: this.state.Fornavn,

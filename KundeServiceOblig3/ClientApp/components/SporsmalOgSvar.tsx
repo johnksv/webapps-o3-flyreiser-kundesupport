@@ -78,6 +78,9 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
         };
 
         const skjemadataJson = JSON.stringify(skjemadata);
+        this.setState({
+            requestTilbakemelding: "Lagrer. Vent..."
+        });
         fetch("api/SporsmalOgSvar/", {
             headers: {
                 'Accept': 'application/json',
