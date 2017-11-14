@@ -40,9 +40,12 @@ export default class Input extends React.Component<InputI, InputState> {
 
         return <div className={this.genererClassNameInputGroup()}>
             <label htmlFor={navn}>{tittel}</label>
+
+            <span className={this.genererFeilmeldingClassName()}>{"- " + this.props.feilmelding}</span>
+
             <input type="text" {...htmlProps} className="form-control" />
             <span className={this.genererSpanClassNameForInput()} aria-hidden="true"></span>
-            <span className={this.genererFeilmeldingClassName()}>{this.props.feilmelding}</span>
+
         </div>;
     }
 

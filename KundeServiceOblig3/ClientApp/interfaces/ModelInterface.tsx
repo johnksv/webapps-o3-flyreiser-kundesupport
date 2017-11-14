@@ -1,7 +1,6 @@
 ﻿export interface KategoriI {
     navn: string;
     sporsmalOgSvar: SporsmalOgSvarI[];
-    laster: boolean;
 }
 
 

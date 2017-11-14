@@ -33,7 +33,7 @@ export class NavMenu extends React.Component<{}, {}> {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={'/brukersporsmal'} activeClassName='active'>
+                            <NavLink to={'/sporsmaladmin'} activeClassName='active'>
                                 <span className='glyphicon glyphicon-inbox'></span>Brukersp&#248;rsm&#229;l
                             </NavLink>
                         </li>

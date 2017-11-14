@@ -15,14 +15,13 @@ export default class Kategori extends React.Component<KategoriIProps, KategoriI>
 
         this.state = {
             navn: this.props.kategori.navn,
-            sporsmalOgSvar: sos,
-            laster: true
+            sporsmalOgSvar: sos
         };
 
         this.renderSporsmal = this.renderSporsmal.bind(this);
         this.onDeleteSporsmal = this.onDeleteSporsmal.bind(this);
+        
     }
-
 
     public render() {
         if (this.state.sporsmalOgSvar.length == 0) return <div> </div>;
@@ -35,7 +34,7 @@ export default class Kategori extends React.Component<KategoriIProps, KategoriI>
             //Hvis vi vil at generelt skal være ekspandert til å starte med
             // cssKlasser.className = cssKlasser.className + " in";
         }
-        
+
         return <div className="panel-group">
             <div className="panel panel-default">
                 <div className="panel-heading kategori" data-toggle="collapse" data-target={"#collapse" + this.props.index}>
@@ -58,10 +57,9 @@ export default class Kategori extends React.Component<KategoriIProps, KategoriI>
 
 
     private onDeleteSporsmal(id: number) {
-        var sporsmal = this.state.sporsmalOgSvar.filter(s => s.id != id);
+        const sporsmal = this.state.sporsmalOgSvar.filter(s => s.id != id);
         this.setState({
-            sporsmalOgSvar: sporsmal
+            sporsmalOgSvar: sporsmal,
         });
     }
-
 }
