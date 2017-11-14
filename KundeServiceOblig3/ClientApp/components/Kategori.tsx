@@ -20,6 +20,7 @@ export default class Kategori extends React.Component<KategoriIProps, KategoriI>
 
         this.renderSporsmal = this.renderSporsmal.bind(this);
         this.onDeleteSporsmal = this.onDeleteSporsmal.bind(this);
+        this.antallUbsvarteSporsmal = this.antallUbsvarteSporsmal.bind(this);
         
     }
 
@@ -27,19 +28,19 @@ export default class Kategori extends React.Component<KategoriIProps, KategoriI>
         if (this.state.sporsmalOgSvar.length == 0) return <div> </div>;
 
         let antall = this.state.sporsmalOgSvar.length + " spørsmål";
+        let ubesvart;
         let cssKlasser = {
             className: "panel-collapse collapse "
         };
-        if (this.props.index == 0 && this.props.ossModus) {
-            //Hvis vi vil at generelt skal være ekspandert til å starte med
-            // cssKlasser.className = cssKlasser.className + " in";
+        if (!this.props.ossModus) {
+            ubesvart = ", " + this.antallUbsvarteSporsmal() + " ubesvarte "
         }
 
         return <div className="panel-group">
             <div className="panel panel-default">
                 <div className="panel-heading kategori" data-toggle="collapse" data-target={"#collapse" + this.props.index}>
                     <h4 className="panel-title">
-                        {this.state.navn} <small> - {antall} </small>
+                        {this.state.navn} <small> - {antall} {ubesvart} </small>
                     </h4>
                 </div>
                 <div id={"collapse" + this.props.index} {...cssKlasser}>
@@ -61,5 +62,9 @@ export default class Kategori extends React.Component<KategoriIProps, KategoriI>
         this.setState({
             sporsmalOgSvar: sporsmal,
         });
+    }
+
+    private antallUbsvarteSporsmal() {
+        return this.state.sporsmalOgSvar.filter(sos => sos.svar == undefined).length;
     }
 }
