@@ -28,12 +28,17 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
 
     public render() {
         let redigeringModus;
+        let kundeinfo;
         if (!this.props.ossModus) {
             let oppdatering;
             if (this.state.requestTilbakemelding != undefined) {
                 oppdatering = <p>{this.state.requestTilbakemelding}</p>;
             }
+            if (this.state.kunde) {
+                kundeinfo = < small > Stilt av: {this.state.kunde.fornavn} {this.state.kunde.etternavn} - {this.state.kunde.epost} - {this.state.kunde.telefon}</small >
+            }
 
+            //Legg til redigeringsmodus.
             redigeringModus = <div className="panel-footer">
                 <div className="checkbox">
                     <label>
@@ -51,6 +56,7 @@ export default class SporsmalOgSvar extends React.Component<SporsmalOgSvarIProps
             <div className="panel panel-default">
                 <div className="panel-heading">
                     <Sporsmal sporsmal={this.state.sporsmal} ossModus={this.props.ossModus} />
+                    {kundeinfo}
                 </div>
                 <div className="panel-body">
                     <Svar svar={this.state.svar} ossModus={this.props.ossModus} svarEndres={this.onEndreSvar} redigeringsModus={this.props.redigeringsModus} />

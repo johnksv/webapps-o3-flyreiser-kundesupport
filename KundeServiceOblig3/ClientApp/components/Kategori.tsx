@@ -33,7 +33,9 @@ export default class Kategori extends React.Component<KategoriIProps, KategoriI>
             className: "panel-collapse collapse "
         };
         if (!this.props.ossModus) {
-            ubesvart = ", " + this.antallUbsvarteSporsmal() + " ubesvarte "
+            const antall = this.antallUbsvarteSporsmal();
+            const ending = this.antallUbsvarteSporsmal() == 1 ? " ubsvart" : " ubesvarte";
+            ubesvart = ", " + antall + ending;
         }
 
         return <div className="panel-group">
