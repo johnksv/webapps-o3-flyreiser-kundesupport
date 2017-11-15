@@ -3,6 +3,9 @@ John Kasper Svergja - s305089
 
 URL: http://kundeserviceoblig3webapps.azurewebsites.net/
 
+Styling er gjort minimalistik etter hensikt.
+Jeg var veldig usikker på plassering av teksten i forhold til når man taster inn feil i skjemaet, og når man lister opp spørsmål på administeringssiden. 
+
 Følgende teknologi og rammeverk er brukt:
 - .NET Core 2.0 (https://www.microsoft.com/net)
 - Reactjs v15.6.1 (http://reactjs.org/)
@@ -11,10 +14,9 @@ Følgende teknologi og rammeverk er brukt:
 - Isomorphic-fetch v2.2.1 (https://github.com/matthew-andrews/isomorphic-fetch)
 Diverse andre pakker (se package.json for ytterlige detaljer).
 
-
 Mangler:
 Ved søk av spørsmål vil kategoriene automatisk bli kollapset. Dette fordi staten oppdateres, og komponenten rendreres på nytt.
-Validering kunne vært mer presis/avanasert med tanke på de regulære utrykkene. 
+Validering kunne vært mer presis/avanasert med tanke på de regulære utrykkene.  
 
 
 Mulig løsning:
