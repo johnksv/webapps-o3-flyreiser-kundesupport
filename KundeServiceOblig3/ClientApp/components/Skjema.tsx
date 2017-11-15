@@ -3,6 +3,7 @@ import 'isomorphic-fetch';
 import { SkjemaStateI } from "../interfaces/ModelInterface";
 import { SkjemaIProps, InputI } from "../interfaces/PropsInterface";
 import Input from "./Input";
+import Textarea from "./Textarea";
 
 export default class Skjema extends React.Component<SkjemaIProps, SkjemaStateI> {
 
@@ -40,7 +41,7 @@ export default class Skjema extends React.Component<SkjemaIProps, SkjemaStateI> 
 
             <Input navn="Telefon" feilmelding="Telefonnummer må bestå av 8 tall, og ikke starte på 0." regex="^[1-9][0-9]{7}$" settValid={this.settValid} />
 
-            <Input navn="Sporsmal" tittel="Spørsmål" feilmelding="Spørsmål inneholder ugyldig tegn." regex="^[0-9A-Za-zæøåÆØÅ\\-?!., ]+$" regexFlags="m" settValid={this.settValid} disableAutocomplete={true} />
+            <Textarea navn="Sporsmal" tittel="Spørsmål" feilmelding="Spørsmål inneholder ugyldig tegn." regex="^[0-9A-Za-zæøåÆØÅ\\-?!., ]+$" settValid={this.settValid} disableAutocomplete={true} />
 
             {feilmelding}
 
