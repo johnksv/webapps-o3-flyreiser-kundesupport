@@ -13,6 +13,7 @@ Følgende teknologi og rammeverk er brukt:
 - Typescript v2.4.1 (https://www.typescriptlang.org/)
 - Bootstrap v3.3.7 (https://getbootstrap.com/)
 - Isomorphic-fetch v2.2.1 (https://github.com/matthew-andrews/isomorphic-fetch)
+- react-router-dom v4.1.1 (https://github.com/ReactTraining/react-router)
 Diverse andre pakker (se package.json for ytterlige detaljer).
 
 Mangler:
