@@ -1,6 +1,7 @@
 Obligatorisk oppgave 3 - Kundeservice
 John Kasper Svergja - s305089
 
+For å kunne kjøre løsningen lokalt må du ha internett-tilgang slik at NuGet- og npm-pakker blir lastet ned.
 URL: http://kundeserviceoblig3webapps.azurewebsites.net/
 
 Styling er gjort minimalistik etter hensikt.
