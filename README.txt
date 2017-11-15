@@ -15,7 +15,6 @@ Diverse andre pakker (se package.json for ytterlige detaljer).
 Mangler:
 Ved søk av spørsmål vil kategoriene automatisk bli kollapset. Dette fordi staten oppdateres, og komponenten rendreres på nytt.
 Validering kunne vært mer presis/avanasert med tanke på de regulære utrykkene. 
-Ved innsending av spørsmål vil linjer bli fjernet (\n).
 
 
 Mulig løsning:
